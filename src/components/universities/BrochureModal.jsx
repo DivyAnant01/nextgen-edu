@@ -1,0 +1,52 @@
+import Modal from "../common/Modal";
+
+export default function BrochureModal({
+  isOpen,
+  onClose,
+}) {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+    >
+      <h2 className="text-3xl font-bold mb-6">
+        Download Brochure
+      </h2>
+
+      <div className="space-y-4">
+
+        <input
+          placeholder="Name"
+          className="
+          w-full
+          p-4
+          rounded-xl
+          bg-black/20
+          "
+        />
+
+        <input
+          placeholder="Phone"
+          className="
+          w-full
+          p-4
+          rounded-xl
+          bg-black/20
+          "
+        />
+
+        <button
+          className="
+          w-full
+          bg-purple-500
+          py-4
+          rounded-xl
+          "
+        >
+          Download PDF
+        </button>
+
+      </div>
+    </Modal>
+  );
+}
