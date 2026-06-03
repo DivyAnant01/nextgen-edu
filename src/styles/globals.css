@@ -32,3 +32,21 @@ a {
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.1);
 }
+
+:root[data-theme="dark"] {
+  --bg: #050816;
+  --card: rgba(255,255,255,0.05);
+  --text: white;
+}
+
+:root[data-theme="light"] {
+  --bg: #f5f7fa;
+  --card: white;
+  --text: #111827;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}

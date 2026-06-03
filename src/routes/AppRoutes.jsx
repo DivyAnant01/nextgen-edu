@@ -4,8 +4,11 @@ import {
   Route,
 } from "react-router-dom";
 
+import UniversityDetails from "../pages/UniversityDetails";
+
 import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import Admission from "../pages/Admission";
 
 /* Pages */
 import Home from "../pages/Home";
@@ -13,7 +16,7 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 
 import Universities from "../pages/Universities";
-import UniversityDetails from "../pages/UniversityDetails";
+// import UniversityDetails from "../pages/UniversityDetails";
 
 import Courses from "../pages/Courses";
 import CourseDetails from "../pages/CourseDetails";
@@ -42,6 +45,15 @@ export default function AppRoutes() {
         <Route path="/" element={<MainLayout />}>
           {/* Home */}
           <Route index element={<Home />} />
+
+          <Route
+  path="applications"
+  element={
+    <ProtectedRoute>
+      <Applications />
+    </ProtectedRoute>
+  }
+/>
 
           {/* Static Pages */}
           <Route path="about" element={<About />} />
@@ -105,6 +117,11 @@ export default function AppRoutes() {
           />
 
           <Route
+  path="/university/:slug"
+  element={<UniversityDetails />}
+/>
+
+          <Route
   path="applications"
   element={
     <ProtectedRoute>
@@ -124,6 +141,11 @@ export default function AppRoutes() {
              path="scholarships"
              element={<Scholarships />}
           />
+
+          <Route
+  path="admission"
+  element={<Admission />}
+/>
 
           <Route
   path="reviews"

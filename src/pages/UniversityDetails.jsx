@@ -194,6 +194,137 @@ const [brochureOpen, setBrochureOpen] =
 
         </div>
 
+        {/* STATS */}
+
+<div className="grid md:grid-cols-4 gap-6 mt-8">
+
+  <div className="glass p-6 rounded-2xl text-center">
+    <h3 className="text-3xl font-bold">
+      ⭐ {university.rating}
+    </h3>
+    <p className="text-gray-400 mt-2">
+      Rating
+    </p>
+  </div>
+
+  <div className="glass p-6 rounded-2xl text-center">
+    <h3 className="text-3xl font-bold">
+      ₹ {Number(
+        university.fees
+      ).toLocaleString()}
+    </h3>
+    <p className="text-gray-400 mt-2">
+      Semester Fees
+    </p>
+  </div>
+
+  <div className="glass p-6 rounded-2xl text-center">
+    <h3 className="text-3xl font-bold">
+      {university.courses.length}
+    </h3>
+    <p className="text-gray-400 mt-2">
+      Courses
+    </p>
+  </div>
+
+  <div className="glass p-6 rounded-2xl text-center">
+    <h3 className="text-3xl font-bold">
+      {university.approvals.length}
+    </h3>
+    <p className="text-gray-400 mt-2">
+      Approvals
+    </p>
+  </div>
+
+</div>
+
+{/* KEY HIGHLIGHTS */}
+
+<div className="glass p-8 rounded-3xl mt-8">
+
+  <h2 className="text-3xl font-bold mb-6">
+    Key Highlights
+  </h2>
+
+  <ul className="space-y-4">
+
+    <li>
+      ✅ UGC Approved University
+    </li>
+
+    <li>
+      ✅ Online Admission Process
+    </li>
+
+    <li>
+      ✅ Placement Assistance
+    </li>
+
+    <li>
+      ✅ Industry Relevant Curriculum
+    </li>
+
+    <li>
+      ✅ Flexible Learning Options
+    </li>
+
+  </ul>
+
+</div>
+
+{/* WHY CHOOSE */}
+
+<div className="glass p-8 rounded-3xl mt-8">
+
+  <h2 className="text-3xl font-bold mb-6">
+    Why Choose {university.name}?
+  </h2>
+
+  <p className="leading-8 text-gray-300">
+
+    {university.name}
+    {" "}
+    offers quality education,
+    recognized approvals,
+    experienced faculty,
+    strong placement support
+    and flexible learning
+    options for students
+    across India.
+
+  </p>
+
+</div>
+
+{/* STUDENT REVIEWS */}
+
+<div className="glass p-8 rounded-3xl mt-8">
+
+  <h2 className="text-3xl font-bold mb-6">
+    Student Reviews
+  </h2>
+
+  <div className="space-y-4">
+
+    <div className="bg-white/5 p-4 rounded-xl">
+      ⭐⭐⭐⭐⭐ Excellent learning
+      experience and faculty.
+    </div>
+
+    <div className="bg-white/5 p-4 rounded-xl">
+      ⭐⭐⭐⭐⭐ Admission process
+      was smooth and simple.
+    </div>
+
+    <div className="bg-white/5 p-4 rounded-xl">
+      ⭐⭐⭐⭐ Great placement
+      support and guidance.
+    </div>
+
+  </div>
+
+</div>
+
         {/* CTA */}
 
         <div

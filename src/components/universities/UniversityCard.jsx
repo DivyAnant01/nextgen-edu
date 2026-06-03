@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Heart, Scale, Eye } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 import { useWishlist } from "../../context/WishlistContext";
 import { useCompare } from "../../context/CompareContext";
@@ -21,52 +22,64 @@ export default function UniversityCard({
 
   return (
     <>
-      <div
+      <motion.div
+        whileHover={{
+          y: -10,
+          scale: 1.02,
+        }}
+        transition={{
+          duration: 0.25,
+        }}
         className="
         glass
         rounded-3xl
         overflow-hidden
-        hover:-translate-y-2
-        duration-300
         "
       >
-        <img
-          src={
-            university.banner ||
-            university.image
-          }
-          alt={university.name}
-          className="
-          w-full
-          h-60
-          object-cover
-          "
-        />
+        <Link
+          to={`/university/${university.slug}`}
+        >
+          <img
+            src={
+              university.banner ||
+              university.image
+            }
+            alt={university.name}
+            className="
+            w-full
+            h-60
+            object-cover
+            "
+          />
+        </Link>
 
         <div className="p-6">
-
           <div className="flex justify-between items-center">
-
-            <h3 className="text-2xl font-bold">
-              {university.name}
-            </h3>
+            <Link
+              to={`/university/${university.slug}`}
+            >
+              <h3 className="text-2xl font-bold hover:text-cyan-400 transition">
+                {university.name}
+              </h3>
+            </Link>
 
             <button
-              onClick={() =>
+              onClick={(e) => {
+                e.preventDefault();
                 addToWishlist(
                   university
-                )
-              }
+                );
+              }}
               className="
               p-2
               rounded-full
               bg-white/10
               hover:bg-white/20
+              transition
               "
             >
               <Heart size={18} />
             </button>
-
           </div>
 
           <p className="text-gray-400 mt-2">
@@ -74,20 +87,19 @@ export default function UniversityCard({
           </p>
 
           <div className="flex gap-4 mt-4">
-
             <span>
               ⭐ {university.rating}
             </span>
 
             <span>
-              ₹ {university.fees}
+              ₹ {Number(
+                university.fees
+              ).toLocaleString()}
             </span>
-
           </div>
 
           {university.approvals && (
             <div className="flex flex-wrap gap-2 mt-4">
-
               {university.approvals
                 .slice(0, 3)
                 .map((approval) => (
@@ -104,14 +116,12 @@ export default function UniversityCard({
                     {approval}
                   </span>
                 ))}
-
             </div>
           )}
 
           <div className="flex gap-3 mt-6">
-
             <Link
-              to={`/universities/${university.slug}`}
+              to={`/university/${university.slug}`}
               className="
               flex-1
               text-center
@@ -119,6 +129,8 @@ export default function UniversityCard({
               px-4
               py-3
               rounded-xl
+              hover:bg-cyan-600
+              transition
               "
             >
               View Details
@@ -135,6 +147,7 @@ export default function UniversityCard({
               border
               border-white/20
               hover:bg-white/10
+              transition
               "
             >
               <Eye size={18} />
@@ -153,15 +166,14 @@ export default function UniversityCard({
               border
               border-white/20
               hover:bg-white/10
+              transition
               "
             >
               <Scale size={18} />
             </button>
-
           </div>
-
         </div>
-      </div>
+      </motion.div>
 
       <QuickViewModal
         university={university}

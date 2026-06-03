@@ -1,3 +1,8 @@
+import {
+  Search,
+  Filter,
+} from "lucide-react";
+
 export default function UniversityFilters({
   search,
   setSearch,
@@ -5,6 +10,10 @@ export default function UniversityFilters({
   setRating,
   sort,
   setSort,
+  course,
+  setCourse,
+  fees,
+  setFees,
 }) {
   return (
     <div
@@ -15,72 +24,193 @@ export default function UniversityFilters({
       mb-8
       "
     >
-      <div className="grid md:grid-cols-3 gap-4">
+      <div
+        className="
+        flex
+        items-center
+        gap-3
+        mb-6
+        "
+      >
+        <Filter size={20} />
 
-        <input
-          type="text"
-          placeholder="Search University..."
-          value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
-          className="
-          p-4
-          rounded-xl
-          bg-black/20
-          "
-        />
+        <h2 className="text-2xl font-bold">
+          Advanced Filters
+        </h2>
+      </div>
+
+      <div className="grid md:grid-cols-5 gap-4">
+
+        {/* Search */}
+
+        <div className="relative">
+
+          <Search
+            size={18}
+            className="
+            absolute
+            left-4
+            top-4
+            "
+          />
+
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) =>
+              setSearch(
+                e.target.value
+              )
+            }
+            className="
+            w-full
+            pl-12
+            p-4
+            rounded-xl
+            bg-white/10
+            "
+          />
+        </div>
+
+        {/* Rating */}
 
         <select
           value={rating}
           onChange={(e) =>
-            setRating(e.target.value)
+            setRating(
+              e.target.value
+            )
           }
           className="
           p-4
           rounded-xl
-          bg-black/20
+          bg-white/10
           "
         >
           <option value="">
-            All Ratings
+            Rating
+          </option>
+
+          <option value="4">
+            4+
           </option>
 
           <option value="4.5">
             4.5+
           </option>
 
-          <option value="4.7">
-            4.7+
-          </option>
-
           <option value="4.8">
             4.8+
           </option>
+
         </select>
 
+        {/* Course */}
+
         <select
-          value={sort}
+          value={course}
           onChange={(e) =>
-            setSort(e.target.value)
+            setCourse(
+              e.target.value
+            )
           }
           className="
           p-4
           rounded-xl
-          bg-black/20
+          bg-white/10
           "
         >
           <option value="">
-            Sort By
+            Course
+          </option>
+
+          <option value="MBA">
+            MBA
+          </option>
+
+          <option value="BBA">
+            BBA
+          </option>
+
+          <option value="BCA">
+            BCA
+          </option>
+
+          <option value="MCA">
+            MCA
+          </option>
+
+        </select>
+
+        {/* Fees */}
+
+        <select
+          value={fees}
+          onChange={(e) =>
+            setFees(
+              e.target.value
+            )
+          }
+          className="
+          p-4
+          rounded-xl
+          bg-white/10
+          "
+        >
+          <option value="">
+            Fees
+          </option>
+
+          <option value="40000">
+            Below 40k
+          </option>
+
+          <option value="50000">
+            Below 50k
+          </option>
+
+          <option value="60000">
+            Below 60k
+          </option>
+
+        </select>
+
+        {/* Sort */}
+
+        <select
+          value={sort}
+          onChange={(e) =>
+            setSort(
+              e.target.value
+            )
+          }
+          className="
+          p-4
+          rounded-xl
+          bg-white/10
+          "
+        >
+          <option value="">
+            Sort
           </option>
 
           <option value="high">
-            Rating High-Low
+            Rating High
           </option>
 
           <option value="low">
-            Rating Low-High
+            Rating Low
           </option>
+
+          <option value="feesLow">
+            Fees Low
+          </option>
+
+          <option value="feesHigh">
+            Fees High
+          </option>
+
         </select>
 
       </div>

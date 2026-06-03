@@ -1,6 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import {
+  ApplicationProvider,
+} from "./context/ApplicationContext";
+
+import {
+  ThemeProvider,
+} from "./context/ThemeContext";
+
 import App from "./App";
 import {
   AuthProvider,
@@ -21,19 +29,26 @@ ReactDOM.createRoot(
 ).render(
   <React.StrictMode>
 
-   <AuthProvider>
+   <ThemeProvider>
 
-  <CompareProvider>
+  <AuthProvider>
 
-    <WishlistProvider>
+  <ApplicationProvider>
 
-      <App />
+    <CompareProvider>
 
-    </WishlistProvider>
+      <WishlistProvider>
 
-  </CompareProvider>
+        <App />
+
+      </WishlistProvider>
+
+    </CompareProvider>
+
+  </ApplicationProvider>
 
 </AuthProvider>
 
+</ThemeProvider>
   </React.StrictMode>
 );

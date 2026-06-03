@@ -1,13 +1,39 @@
 import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import {
+  Menu,
+  X,
+  Moon,
+  Sun,
+  Bell,
+} from "lucide-react";
+
 import { useAuth } from "../../context/AuthContext";
 import { useWishlist } from "../../context/WishlistContext";
 import { useCompare } from "../../context/CompareContext";
+import { useApplications } from "../../context/ApplicationContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const [mobileOpen, setMobileOpen] =
+    useState(false);
 
-  const { wishlist } = useWishlist();
-  const { compareList } = useCompare();
+  const { user, logout } =
+    useAuth();
+
+  const { wishlist } =
+    useWishlist();
+
+  const { compareList } =
+    useCompare();
+
+  const { applications } =
+    useApplications();
+
+  const {
+    theme,
+    toggleTheme,
+  } = useTheme();
 
   const navClass = ({ isActive }) =>
     isActive
@@ -25,6 +51,7 @@ export default function Navbar() {
       glass
       border-b
       border-white/10
+      backdrop-blur-xl
       "
     >
       <div
@@ -38,6 +65,8 @@ export default function Navbar() {
         items-center
         "
       >
+        {/* Logo */}
+
         <Link
           to="/"
           className="
@@ -49,9 +78,20 @@ export default function Navbar() {
           NextGenEdu
         </Link>
 
-        <div className="flex items-center gap-6">
+        {/* Desktop Menu */}
 
-          <NavLink to="/" className={navClass}>
+        <div
+          className="
+          hidden
+          lg:flex
+          items-center
+          gap-6
+          "
+        >
+          <NavLink
+            to="/"
+            className={navClass}
+          >
             Home
           </NavLink>
 
@@ -83,58 +123,101 @@ export default function Navbar() {
             Scholarships
           </NavLink>
 
-          {/* Compare Badge */}
-
           <NavLink
             to="/compare"
-            className="relative"
+            className={navClass}
           >
-            Compare
-
-            {compareList.length > 0 && (
-              <span
-                className="
-                absolute
-                -top-2
-                -right-4
-                bg-cyan-500
-                text-xs
-                px-2
-                rounded-full
-                "
-              >
-                {compareList.length}
-              </span>
-            )}
+            Compare ({compareList.length})
           </NavLink>
-
-          {/* Wishlist Badge */}
 
           <NavLink
             to="/wishlist"
-            className="relative"
+            className={navClass}
           >
-            Wishlist
+            Wishlist ({wishlist.length})
+          </NavLink>
 
-            {wishlist.length > 0 && (
+          {user && (
+            <NavLink
+              to="/applications"
+              className={navClass}
+            >
+              Applications (
+              {applications.length}
+              )
+            </NavLink>
+          )}
+        </div>
+
+        {/* Right Section */}
+
+        <div
+          className="
+          flex
+          items-center
+          gap-3
+          "
+        >
+          {/* Theme Toggle */}
+
+          <button
+            onClick={toggleTheme}
+            className="
+            p-2
+            rounded-xl
+            bg-white/10
+            hover:bg-white/20
+            "
+          >
+            {theme === "dark" ? (
+              <Sun size={18} />
+            ) : (
+              <Moon size={18} />
+            )}
+          </button>
+
+          {/* Notification */}
+
+          {user && (
+            <Link
+              to="/notifications"
+              className="
+              relative
+              p-2
+              rounded-xl
+              bg-white/10
+              hover:bg-white/20
+              "
+            >
+              <Bell size={18} />
+
               <span
                 className="
                 absolute
-                -top-2
-                -right-4
+                -top-1
+                -right-1
                 bg-red-500
-                text-xs
-                px-2
+                text-[10px]
+                px-1.5
                 rounded-full
                 "
               >
-                {wishlist.length}
+                3
               </span>
-            )}
-          </NavLink>
+            </Link>
+          )}
+
+          {/* Auth Buttons */}
 
           {!user ? (
-            <>
+            <div
+              className="
+              hidden
+              lg:flex
+              items-center
+              gap-3
+              "
+            >
               <NavLink
                 to="/login"
                 className={navClass}
@@ -150,14 +233,20 @@ export default function Navbar() {
                 py-2
                 rounded-xl
                 hover:bg-cyan-600
-                duration-300
                 "
               >
                 Register
               </Link>
-            </>
+            </div>
           ) : (
-            <>
+            <div
+              className="
+              hidden
+              lg:flex
+              items-center
+              gap-3
+              "
+            >
               <Link
                 to="/dashboard"
                 className="
@@ -166,10 +255,21 @@ export default function Navbar() {
                 py-2
                 rounded-xl
                 hover:bg-purple-600
-                duration-300
                 "
               >
                 Dashboard
+              </Link>
+
+              <Link
+                to="/profile"
+                className="
+                bg-white/10
+                px-4
+                py-2
+                rounded-xl
+                "
+              >
+                {user?.name}
               </Link>
 
               <button
@@ -180,16 +280,187 @@ export default function Navbar() {
                 py-2
                 rounded-xl
                 hover:bg-red-600
-                duration-300
                 "
               >
                 Logout
               </button>
-            </>
+            </div>
           )}
 
+          {/* Mobile Button */}
+
+          <button
+            onClick={() =>
+              setMobileOpen(
+                !mobileOpen
+              )
+            }
+            className="
+            lg:hidden
+            "
+          >
+            {mobileOpen ? (
+              <X />
+            ) : (
+              <Menu />
+            )}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+
+      {mobileOpen && (
+        <div
+          className="
+          lg:hidden
+          glass
+          px-6
+          pb-6
+          "
+        >
+          <div className="flex flex-col gap-4">
+
+            <NavLink
+              to="/"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+            >
+              Home
+            </NavLink>
+
+            <NavLink
+              to="/universities"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+            >
+              Universities
+            </NavLink>
+
+            <NavLink
+              to="/courses"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+            >
+              Courses
+            </NavLink>
+
+            <NavLink
+              to="/reviews"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+            >
+              Reviews
+            </NavLink>
+
+            <NavLink
+              to="/scholarships"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+            >
+              Scholarships
+            </NavLink>
+
+            <NavLink
+              to="/wishlist"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+            >
+              Wishlist ({wishlist.length})
+            </NavLink>
+
+            <NavLink
+              to="/compare"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+            >
+              Compare ({compareList.length})
+            </NavLink>
+
+            {user && (
+              <>
+                <NavLink
+                  to="/applications"
+                  onClick={() =>
+                    setMobileOpen(false)
+                  }
+                >
+                  Applications (
+                  {applications.length}
+                  )
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard"
+                  onClick={() =>
+                    setMobileOpen(false)
+                  }
+                >
+                  Dashboard
+                </NavLink>
+
+                <NavLink
+                  to="/profile"
+                  onClick={() =>
+                    setMobileOpen(false)
+                  }
+                >
+                  Profile
+                </NavLink>
+
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileOpen(false);
+                  }}
+                  className="
+                  bg-red-500
+                  py-2
+                  rounded-xl
+                  "
+                >
+                  Logout
+                </button>
+              </>
+            )}
+
+            {!user && (
+              <>
+                <NavLink
+                  to="/login"
+                  onClick={() =>
+                    setMobileOpen(false)
+                  }
+                >
+                  Login
+                </NavLink>
+
+                <Link
+                  to="/register"
+                  onClick={() =>
+                    setMobileOpen(false)
+                  }
+                  className="
+                  bg-cyan-500
+                  py-2
+                  rounded-xl
+                  text-center
+                  "
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
