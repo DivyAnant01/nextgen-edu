@@ -11,10 +11,12 @@ EyeOff,
 import { motion } from "framer-motion";
 
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Register() {
 const navigate = useNavigate();
 const { login } = useAuth();
+const { theme } = useTheme();
 
 const [formData, setFormData] = useState({
 name: "",
@@ -82,21 +84,23 @@ navigate("/dashboard");
 };
 
 return ( <section
-   className="
-   min-h-screen
-   relative
-   overflow-hidden
-   flex
-   items-center
-   justify-center
-   px-6
-   py-20
-   bg-gradient-to-br
-   from-slate-950
-   via-slate-900
-   to-cyan-950
-   "
- >
+  className={`
+  min-h-screen
+  relative
+  overflow-hidden
+  flex
+  items-center
+  justify-center
+  px-6
+  py-20
+
+  ${
+    theme === "dark"
+      ? "bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950 text-white"
+      : "bg-gradient-to-br from-cyan-50 via-white to-blue-100 text-slate-900"
+  }
+  `}
+>
 {/* Background Blobs */}
 
 
@@ -142,21 +146,22 @@ return ( <section
     transition={{
       duration: 0.7,
     }}
-    className="
-    relative
-    z-10
-    w-full
-    max-w-md
-    backdrop-blur-2xl
-    bg-white/5
-    border
-    border-white/10
-    rounded-[32px]
-    p-8
-    shadow-[0_0_60px_rgba(0,255,255,0.15)]
-    hover:shadow-[0_0_80px_rgba(0,255,255,0.25)]
-    duration-500
-    "
+    className={`
+relative
+z-10
+w-full
+max-w-md
+backdrop-blur-2xl
+rounded-[32px]
+p-8
+duration-500
+
+${
+  theme === "dark"
+    ? "bg-white/5 border border-white/10 shadow-[0_0_60px_rgba(0,255,255,0.15)] hover:shadow-[0_0_80px_rgba(0,255,255,0.25)]"
+    : "bg-white/90 border border-slate-200 shadow-2xl"
+}
+`}
   >
     {/* Header */}
 
@@ -197,25 +202,34 @@ return ( <section
         Create Account
       </h1>
 
-      <p className="text-gray-400 mt-3">
-        Join NextGenEdu Today
-      </p>
+      <p
+  className={`mt-3 ${
+    theme === "dark"
+      ? "text-gray-400"
+      : "text-slate-600"
+  }`}
+>
+  Join NextGenEdu Today
+</p>
     </div>
 
     {/* Error */}
 
     {error && (
       <div
-        className="
-        bg-red-500/10
-        border
-        border-red-500/20
-        text-red-300
-        p-4
-        rounded-2xl
-        animate-pulse
-        mb-5
-        "
+       className={`
+border
+p-4
+rounded-2xl
+animate-pulse
+mb-4
+
+${
+  theme === "dark"
+    ? "bg-red-500/10 border-red-500/20 text-red-300"
+    : "bg-red-50 border-red-200 text-red-600"
+}
+`}
       >
         {error}
       </div>
@@ -244,20 +258,25 @@ return ( <section
           placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
-          className="
-          w-full
-          pl-12
-          p-4
-          rounded-2xl
-          bg-black/20
-          border
-          border-white/10
-          focus:border-cyan-400
-          focus:ring-4
-          focus:ring-cyan-500/20
-          outline-none
-          duration-300
-          "
+         className={`
+w-full
+pl-12
+p-4
+rounded-2xl
+border
+focus:border-cyan-400
+focus:ring-4
+focus:ring-cyan-500/20
+outline-none
+duration-300
+
+${
+  theme === "dark"
+    ? "bg-black/20 border-white/10 text-white"
+    : "bg-white border-slate-300 text-slate-900"
+}
+`}
+          
         />
       </div>
 
@@ -280,20 +299,25 @@ return ( <section
           placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
-          className="
-          w-full
-          pl-12
-          p-4
-          rounded-2xl
-          bg-black/20
-          border
-          border-white/10
-          focus:border-cyan-400
-          focus:ring-4
-          focus:ring-cyan-500/20
-          outline-none
-          duration-300
-          "
+          className={`
+w-full
+pl-12
+p-4
+rounded-2xl
+border
+placeholder:text-gray-400
+focus:border-cyan-400
+focus:ring-4
+focus:ring-cyan-500/20
+outline-none
+duration-300
+
+${
+  theme === "dark"
+    ? "bg-black/20 border-white/10 text-white"
+    : "bg-white border-slate-300 text-slate-900"
+}
+`}
         />
       </div>
 
@@ -318,23 +342,28 @@ return ( <section
           }
           name="password"
           placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="
-          w-full
-          pl-12
-          pr-12
-          p-4
-          rounded-2xl
-          bg-black/20
-          border
-          border-white/10
-          focus:border-cyan-400
-          focus:ring-4
-          focus:ring-cyan-500/20
-          outline-none
-          duration-300
-          "
+        value={formData.password}
+onChange={handleChange}
+         className={`
+w-full
+pl-12
+pr-12
+p-4
+rounded-2xl
+border
+placeholder:text-gray-400
+focus:border-cyan-400
+focus:ring-4
+focus:ring-cyan-500/20
+outline-none
+duration-300
+
+${
+  theme === "dark"
+    ? "bg-black/20 border-white/10 text-white"
+    : "bg-white border-slate-300 text-slate-900"
+}
+`}
         />
 
         <button
@@ -344,13 +373,18 @@ return ( <section
               !showPassword
             )
           }
-          className="
-          absolute
-          right-4
-          top-5
-          text-gray-400
-          hover:text-cyan-400
-          "
+          className={`
+absolute
+right-4
+top-5
+hover:text-cyan-400
+
+${
+  theme === "dark"
+    ? "text-gray-400"
+    : "text-slate-500"
+}
+`}
         >
           {showPassword ? (
             <EyeOff size={18} />
@@ -363,67 +397,75 @@ return ( <section
       {/* Confirm Password */}
 
       <div className="relative">
-        <Lock
-          size={18}
-          className="
-          absolute
-          left-4
-          top-5
-          text-gray-400
-          "
-        />
+  <Lock
+    size={18}
+    className="
+    absolute
+    left-4
+    top-5
+    text-gray-400
+    "
+  />
 
-        <input
-          type={
-            showConfirmPassword
-              ? "text"
-              : "password"
-          }
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={
-            formData.confirmPassword
-          }
-          onChange={handleChange}
-          className="
-          w-full
-          pl-12
-          pr-12
-          p-4
-          rounded-2xl
-          bg-black/20
-          border
-          border-white/10
-          focus:border-cyan-400
-          focus:ring-4
-          focus:ring-cyan-500/20
-          outline-none
-          duration-300
-          "
-        />
+  <input
+    type={
+      showConfirmPassword
+        ? "text"
+        : "password"
+    }
+    name="confirmPassword"
+    placeholder="Confirm Password"
+    value={formData.confirmPassword}
+    onChange={handleChange}
+    className={`
+    w-full
+    pl-12
+    pr-12
+    p-4
+    rounded-2xl
+    border
+    placeholder:text-gray-400
+    focus:border-cyan-400
+    focus:ring-4
+    focus:ring-cyan-500/20
+    outline-none
+    duration-300
 
-        <button
-          type="button"
-          onClick={() =>
-            setShowConfirmPassword(
-              !showConfirmPassword
-            )
-          }
-          className="
-          absolute
-          right-4
-          top-5
-          text-gray-400
-          hover:text-cyan-400
-          "
-        >
-          {showConfirmPassword ? (
-            <EyeOff size={18} />
-          ) : (
-            <Eye size={18} />
-          )}
-        </button>
-      </div>
+    ${
+      theme === "dark"
+        ? "bg-black/20 border-white/10 text-white"
+        : "bg-white border-slate-300 text-slate-900"
+    }
+    `}
+  />
+
+  <button
+    type="button"
+    onClick={() =>
+      setShowConfirmPassword(
+        !showConfirmPassword
+      )
+    }
+    className={`
+    absolute
+    right-4
+    top-5
+    hover:text-cyan-400
+
+    ${
+      theme === "dark"
+        ? "text-gray-400"
+        : "text-slate-500"
+    }
+    `}
+  >
+    {showConfirmPassword ? (
+      <EyeOff size={18} />
+    ) : (
+      <Eye size={18} />
+    )}
+  </button>
+</div>
 
       {/* Submit Button */}
 
@@ -451,11 +493,13 @@ return ( <section
     {/* Footer */}
 
     <div
-      className="
-      mt-8
-      text-center
-      text-gray-400
-      "
+      
+  className={`mt-8 text-center ${
+    theme === "dark"
+      ? "text-gray-400"
+      : "text-slate-600"
+  }`}
+
     >
       Already have an account?{" "}
       <Link

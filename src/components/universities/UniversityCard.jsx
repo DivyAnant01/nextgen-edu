@@ -37,8 +37,7 @@ export default function UniversityCard({
         "
       >
         <Link
-          to={`/university/${university.slug}`}
-        >
+to={`/universities/${university.slug}`}        >
           <img
             src={
               university.banner ||
@@ -56,8 +55,7 @@ export default function UniversityCard({
         <div className="p-6">
           <div className="flex justify-between items-center">
             <Link
-              to={`/university/${university.slug}`}
-            >
+to={`/universities/${university.slug}`}            >
               <h3 className="text-2xl font-bold hover:text-cyan-400 transition">
                 {university.name}
               </h3>
@@ -121,8 +119,7 @@ export default function UniversityCard({
 
           <div className="flex gap-3 mt-6">
             <Link
-              to={`/university/${university.slug}`}
-              className="
+to={`/universities/${university.slug}`}              className="
               flex-1
               text-center
               bg-cyan-500

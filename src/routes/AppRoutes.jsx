@@ -89,7 +89,7 @@ export default function AppRoutes() {
 
           {/* My Applications */}
           <Route
-            path="applications"
+            // path="applications"
             element={
               <ProtectedRoute>
                 <MyApplications />
@@ -116,13 +116,13 @@ export default function AppRoutes() {
             element={<UniversityDetails />}
           />
 
-          <Route
+          {/* <Route
   path="/university/:slug"
   element={<UniversityDetails />}
-/>
+/> */}
 
           <Route
-  path="applications"
+  // path="applications"
   element={
     <ProtectedRoute>
       <Applications />

@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 
 import {
+  useApplications,
+} from "../../context/ApplicationContext";
+
+import {
   LayoutDashboard,
   User,
   Heart,
@@ -14,6 +18,9 @@ import { useWishlist } from "../../context/WishlistContext";
 import { useCompare } from "../../context/CompareContext";
 
 export default function DashboardSidebar() {
+  const {
+  applications,
+} = useApplications();
   const { logout } = useAuth();
 
   const { wishlist } = useWishlist();
@@ -104,14 +111,28 @@ export default function DashboardSidebar() {
         {/* Applications */}
 
         <NavLink
-          to="/applications"
-          className={linkClass}
-        >
-          <div className="flex items-center gap-3">
-            <FileText size={18} />
-            Applications
-          </div>
-        </NavLink>
+  to="/applications"
+  className={linkClass}
+>
+  <div className="flex items-center gap-3">
+    <FileText size={18} />
+    Applications
+  </div>
+
+  {applications.length > 0 && (
+    <span
+      className="
+      bg-green-500
+      text-xs
+      px-2
+      py-1
+      rounded-full
+      "
+    >
+      {applications.length}
+    </span>
+  )}
+</NavLink>
 
         {/* Compare */}
 

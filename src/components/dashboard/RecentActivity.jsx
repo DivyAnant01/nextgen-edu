@@ -1,10 +1,7 @@
+import { useApplications } from "../../context/ApplicationContext";
+
 export default function RecentActivity() {
-  const activities = [
-    "Added Amity University to Wishlist",
-    "Compared LPU & Manipal",
-    "Viewed Online MBA Course",
-    "Downloaded University Brochure",
-  ];
+  const { applications } = useApplications();
 
   return (
     <div className="glass p-6 rounded-3xl">
@@ -12,22 +9,35 @@ export default function RecentActivity() {
         Recent Activity
       </h2>
 
-      <div className="space-y-4">
+      {applications.length === 0 ? (
+        <p className="text-gray-400">
+          No recent activity
+        </p>
+      ) : (
+        <div className="space-y-4">
+          {applications
+            .slice()
+            .reverse()
+            .slice(0, 5)
+            .map((app) => (
+              <div
+                key={app.id}
+                className="border-b border-white/10 pb-3"
+              >
+                <p>
+                  Applied for{" "}
+                  <strong>
+                    {app.university}
+                  </strong>
+                </p>
 
-        {activities.map((item, index) => (
-          <div
-            key={index}
-            className="
-            border-l-2
-            border-cyan-500
-            pl-4
-            "
-          >
-            {item}
-          </div>
-        ))}
-
-      </div>
+                <p className="text-sm text-gray-400">
+                  {app.appliedAt}
+                </p>
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 }

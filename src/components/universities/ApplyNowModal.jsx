@@ -1,9 +1,72 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 import Modal from "../common/Modal";
+
+import {
+  useApplications,
+} from "../../context/ApplicationContext";
 
 export default function ApplyNowModal({
   isOpen,
   onClose,
+  university,
 }) {
+  const {
+    addApplication,
+  } = useApplications();
+
+  const [formData, setFormData] =
+    useState({
+      name: "",
+      email: "",
+      phone: "",
+      course: "",
+    });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]:
+        e.target.value,
+    });
+  };
+
+  const handleSubmit = () => {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.course
+    ) {
+      toast.error(
+        "Please fill all fields"
+      );
+      return;
+    }
+
+    addApplication({
+      ...formData,
+      university:
+        university?.name,
+      appliedAt:
+        new Date().toLocaleDateString(),
+    });
+
+    toast.success(
+      "Application Submitted Successfully"
+    );
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      course: "",
+    });
+
+    onClose();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -17,18 +80,10 @@ export default function ApplyNowModal({
 
         <input
           type="text"
+          name="name"
           placeholder="Full Name"
-          className="
-          w-full
-          p-4
-          rounded-xl
-          bg-black/20
-          "
-        />
-
-        <input
-          type="text"
-          placeholder="Phone Number"
+          value={formData.name}
+          onChange={handleChange}
           className="
           w-full
           p-4
@@ -39,7 +94,10 @@ export default function ApplyNowModal({
 
         <input
           type="email"
+          name="email"
           placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
           className="
           w-full
           p-4
@@ -48,12 +106,58 @@ export default function ApplyNowModal({
           "
         />
 
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          className="
+          w-full
+          p-4
+          rounded-xl
+          bg-black/20
+          "
+        />
+
+        <input
+          type="text"
+          name="course"
+          placeholder="Course Name"
+          value={formData.course}
+          onChange={handleChange}
+          className="
+          w-full
+          p-4
+          rounded-xl
+          bg-black/20
+          "
+        />
+
+        <input
+          type="text"
+          value={
+            university?.name || ""
+          }
+          readOnly
+          className="
+          w-full
+          p-4
+          rounded-xl
+          bg-black/10
+          opacity-70
+          "
+        />
+
         <button
+          onClick={handleSubmit}
           className="
           w-full
           bg-cyan-500
           py-4
           rounded-xl
+          hover:bg-cyan-600
+          transition
           "
         >
           Submit Application

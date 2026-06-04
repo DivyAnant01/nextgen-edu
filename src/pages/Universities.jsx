@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import UniversityCard from "../components/universities/UniversityCard";
 import UniversityFilters from "../components/universities/UniversityFilters";
 import AdvancedFilters from "../components/universities/AdvancedFilters";
@@ -13,6 +12,22 @@ export default function Universities() {
   const [location, setLocation] = useState("");
   const [course, setCourse] = useState("");
   const [fees, setFees] = useState(60000);
+
+  const [currentPage, setCurrentPage] =
+  useState(1);
+
+const itemsPerPage = 6;
+
+useEffect(() => {
+  setCurrentPage(1);
+}, [
+  search,
+  rating,
+  sort,
+  location,
+  course,
+  fees,
+]);
 
   const getFeeValue = (fee) => {
     if (typeof fee === "number") return fee;
@@ -67,6 +82,24 @@ export default function Universities() {
         getFeeValue(a.fees)
     );
   }
+
+  const indexOfLastItem =
+  currentPage * itemsPerPage;
+
+const indexOfFirstItem =
+  indexOfLastItem - itemsPerPage;
+
+const currentUniversities =
+  filtered.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+const totalPages =
+  Math.ceil(
+    filtered.length /
+      itemsPerPage
+  );
 
   return (
     <section className="pt-40 pb-20">
@@ -201,12 +234,40 @@ export default function Universities() {
           />
         </div>
 
+        <div className="mb-8">
+  <button
+    onClick={() => {
+      setSearch("");
+      setRating("");
+      setSort("");
+      setLocation("");
+      setCourse("");
+      setFees(60000);
+      setCurrentPage(1);
+    }}
+    className="
+    bg-red-500
+    hover:bg-red-600
+    px-6
+    py-3
+    rounded-xl
+    transition
+    "
+  >
+    Clear All Filters
+  </button>
+</div>
+
         {/* Results Count */}
 
         <div className="mb-6">
           <p className="text-gray-400">
-            Showing {filtered.length} Universities
-          </p>
+  Showing {indexOfFirstItem + 1} -
+  {Math.min(
+    indexOfLastItem,
+    filtered.length
+  )} of {filtered.length} Universities
+</p>
         </div>
 
         {/* Universities Grid */}
@@ -220,7 +281,8 @@ export default function Universities() {
           "
         >
           {filtered.length > 0 ? (
-            filtered.map((university) => (
+            currentUniversities.map(
+  (university) => (
               <UniversityCard
                 key={university.id}
                 university={university}
@@ -241,6 +303,62 @@ export default function Universities() {
           )}
         </div>
       </div>
+
+      <div className="flex justify-center gap-3 mt-10">
+
+  <button
+    disabled={currentPage === 1}
+    onClick={() =>
+      setCurrentPage(currentPage - 1)
+    }
+    className="
+    px-4
+    py-2
+    rounded-xl
+    bg-white/10
+    disabled:opacity-40
+    "
+  >
+    Prev
+  </button>
+
+  {[...Array(totalPages)].map(
+    (_, index) => (
+      <button
+        key={index}
+        onClick={() =>
+          setCurrentPage(index + 1)
+        }
+        className={`px-4 py-2 rounded-xl ${
+          currentPage === index + 1
+            ? "bg-cyan-500"
+            : "bg-white/10"
+        }`}
+      >
+        {index + 1}
+      </button>
+    )
+  )}
+
+  <button
+    disabled={
+      currentPage === totalPages
+    }
+    onClick={() =>
+      setCurrentPage(currentPage + 1)
+    }
+    className="
+    px-4
+    py-2
+    rounded-xl
+    bg-white/10
+    disabled:opacity-40
+    "
+  >
+    Next
+  </button>
+
+</div>
     </section>
   );
 }

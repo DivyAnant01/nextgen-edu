@@ -2,7 +2,10 @@ import {
   createContext,
   useContext,
   useState,
+  useEffect,
 } from "react";
+
+import toast from "react-hot-toast";
 
 const WishlistContext =
   createContext();
@@ -11,7 +14,23 @@ export function WishlistProvider({
   children,
 }) {
   const [wishlist, setWishlist] =
-    useState([]);
+    useState(() => {
+      const saved =
+        localStorage.getItem(
+          "wishlist"
+        );
+
+      return saved
+        ? JSON.parse(saved)
+        : [];
+    });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "wishlist",
+      JSON.stringify(wishlist)
+    );
+  }, [wishlist]);
 
   const addToWishlist = (
     university
@@ -23,12 +42,21 @@ export function WishlistProvider({
           university.id
       );
 
-    if (exists) return;
+    if (exists) {
+      toast.error(
+        "Already in Wishlist"
+      );
+      return;
+    }
 
     setWishlist([
       ...wishlist,
       university,
     ]);
+
+    toast.success(
+      "Added to Wishlist"
+    );
   };
 
   const removeFromWishlist = (
@@ -39,6 +67,10 @@ export function WishlistProvider({
         (item) =>
           item.id !== id
       )
+    );
+
+    toast.success(
+      "Removed from Wishlist"
     );
   };
 

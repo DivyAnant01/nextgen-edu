@@ -37,8 +37,8 @@ export default function Navbar() {
 
   const navClass = ({ isActive }) =>
     isActive
-      ? "text-cyan-400 font-semibold"
-      : "hover:text-cyan-400 duration-300";
+      ? "text-cyan-400 font-semibold whitespace-nowrap"
+      : "hover:text-cyan-400 duration-300 whitespace-nowrap";
 
   return (
     <nav
@@ -56,12 +56,11 @@ export default function Navbar() {
     >
       <div
         className="
-        max-w-7xl
+        max-w-screen-2xl
         mx-auto
         px-6
         py-4
         flex
-        justify-between
         items-center
         "
       >
@@ -70,9 +69,10 @@ export default function Navbar() {
         <Link
           to="/"
           className="
-          text-3xl
+          text-2xl
           font-bold
           gradient-text
+          shrink-0
           "
         >
           NextGenEdu
@@ -83,9 +83,13 @@ export default function Navbar() {
         <div
           className="
           hidden
-          lg:flex
+          xl:flex
+          flex-1
+          justify-center
           items-center
-          gap-6
+          gap-5
+          text-sm
+          overflow-x-auto
           "
         >
           <NavLink
@@ -147,7 +151,7 @@ export default function Navbar() {
               )
             </NavLink>
           )}
-        </div>
+                  </div>
 
         {/* Right Section */}
 
@@ -155,7 +159,9 @@ export default function Navbar() {
           className="
           flex
           items-center
-          gap-3
+          gap-2
+          shrink-0
+          ml-auto
           "
         >
           {/* Theme Toggle */}
@@ -207,13 +213,13 @@ export default function Navbar() {
             </Link>
           )}
 
-          {/* Auth Buttons */}
+          {/* Guest Buttons */}
 
           {!user ? (
             <div
               className="
               hidden
-              lg:flex
+              xl:flex
               items-center
               gap-3
               "
@@ -229,10 +235,12 @@ export default function Navbar() {
                 to="/register"
                 className="
                 bg-cyan-500
-                px-4
+                px-3
                 py-2
+                text-sm
                 rounded-xl
                 hover:bg-cyan-600
+                whitespace-nowrap
                 "
               >
                 Register
@@ -242,19 +250,21 @@ export default function Navbar() {
             <div
               className="
               hidden
-              lg:flex
+              xl:flex
               items-center
-              gap-3
+              gap-2
               "
             >
               <Link
                 to="/dashboard"
                 className="
                 bg-purple-500
-                px-4
+                px-3
                 py-2
+                text-sm
                 rounded-xl
                 hover:bg-purple-600
+                whitespace-nowrap
                 "
               >
                 Dashboard
@@ -264,9 +274,12 @@ export default function Navbar() {
                 to="/profile"
                 className="
                 bg-white/10
-                px-4
+                px-3
                 py-2
+                text-sm
                 rounded-xl
+                max-w-[140px]
+                truncate
                 "
               >
                 {user?.name}
@@ -276,10 +289,12 @@ export default function Navbar() {
                 onClick={logout}
                 className="
                 bg-red-500
-                px-4
+                px-3
                 py-2
+                text-sm
                 rounded-xl
                 hover:bg-red-600
+                whitespace-nowrap
                 "
               >
                 Logout
@@ -287,7 +302,7 @@ export default function Navbar() {
             </div>
           )}
 
-          {/* Mobile Button */}
+          {/* Mobile Toggle */}
 
           <button
             onClick={() =>
@@ -296,7 +311,7 @@ export default function Navbar() {
               )
             }
             className="
-            lg:hidden
+            xl:hidden
             "
           >
             {mobileOpen ? (
@@ -308,12 +323,12 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+            {/* Mobile Menu */}
 
       {mobileOpen && (
         <div
           className="
-          lg:hidden
+          xl:hidden
           glass
           px-6
           pb-6

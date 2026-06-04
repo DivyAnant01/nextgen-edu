@@ -4,10 +4,12 @@ import { Eye, EyeOff, GraduationCap } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { theme } = useTheme();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,21 +35,23 @@ export default function Login() {
 
   return (
     <section
-      className="
-      min-h-screen
-      relative
-      overflow-hidden
-      flex
-      items-center
-      justify-center
-      px-6
-      py-20
-      bg-gradient-to-br
-      from-slate-950
-      via-slate-900
-      to-cyan-950
-      "
-    >
+  className={`
+  min-h-screen
+  relative
+  overflow-hidden
+  flex
+  items-center
+  justify-center
+  px-6
+  py-20
+
+  ${
+    theme === "dark"
+      ? "bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950 text-white"
+      : "bg-gradient-to-br from-cyan-50 via-white to-blue-100 text-slate-900"
+  }
+  `}
+>
       {/* Animated Background */}
       <div className="absolute top-20 left-20 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" />
 
@@ -67,21 +71,22 @@ export default function Login() {
         transition={{
           duration: 0.7,
         }}
-        className="
-        relative
-        z-10
-        w-full
-        max-w-md
-        backdrop-blur-2xl
-        bg-white/5
-        border
-        border-white/10
-        rounded-[32px]
-        p-8
-        shadow-[0_0_60px_rgba(0,255,255,0.15)]
-        hover:shadow-[0_0_80px_rgba(0,255,255,0.25)]
-        duration-500
-        "
+       className={`
+  relative
+  z-10
+  w-full
+  max-w-md
+  backdrop-blur-2xl
+  rounded-[32px]
+  p-8
+  duration-500
+
+  ${
+    theme === "dark"
+      ? "bg-white/5 border border-white/10 shadow-[0_0_60px_rgba(0,255,255,0.15)] hover:shadow-[0_0_80px_rgba(0,255,255,0.25)]"
+      : "bg-white/90 border border-slate-200 shadow-2xl"
+  }
+  `}
       >
         {/* Header */}
         <div className="text-center mb-8">
@@ -121,9 +126,15 @@ export default function Login() {
             Welcome Back
           </h1>
 
-          <p className="text-gray-400 mt-3">
-            Login to access your student dashboard
-          </p>
+          <p
+  className={`mt-3 ${
+    theme === "dark"
+      ? "text-gray-400"
+      : "text-slate-600"
+  }`}
+>
+  Login to access your student dashboard
+</p>
         </div>
 
         {/* Error */}
@@ -156,19 +167,23 @@ export default function Login() {
             onChange={(e) =>
               setEmail(e.target.value)
             }
-            className="
-            w-full
-            p-4
-            rounded-2xl
-            bg-black/20
-            border
-            border-white/10
-            focus:border-cyan-400
-            focus:ring-4
-            focus:ring-cyan-500/20
-            outline-none
-            duration-300
-            "
+            className={`
+w-full
+p-4
+rounded-2xl
+border
+focus:border-cyan-400
+focus:ring-4
+focus:ring-cyan-500/20
+outline-none
+duration-300
+
+${
+  theme === "dark"
+    ? "bg-black/20 border-white/10 text-white"
+    : "bg-white border-slate-300 text-slate-900"
+}
+`}
           />
 
           <div className="relative">
@@ -183,19 +198,23 @@ export default function Login() {
               onChange={(e) =>
                 setPassword(e.target.value)
               }
-              className="
-              w-full
-              p-4
-              rounded-2xl
-              bg-black/20
-              border
-              border-white/10
-              focus:border-cyan-400
-              focus:ring-4
-              focus:ring-cyan-500/20
-              outline-none
-              duration-300
-              "
+             className={`
+w-full
+p-4
+rounded-2xl
+border
+focus:border-cyan-400
+focus:ring-4
+focus:ring-cyan-500/20
+outline-none
+duration-300
+
+${
+  theme === "dark"
+    ? "bg-black/20 border-white/10 text-white"
+    : "bg-white border-slate-300 text-slate-900"
+}
+`}
             />
 
             <button
@@ -205,14 +224,19 @@ export default function Login() {
                   !showPassword
                 )
               }
-              className="
-              absolute
-              right-4
-              top-4
-              text-gray-400
-              hover:text-cyan-400
-              duration-300
-              "
+              className={`
+absolute
+right-4
+top-4
+hover:text-cyan-400
+duration-300
+
+${
+  theme === "dark"
+    ? "text-gray-400"
+    : "text-slate-500"
+}
+`}
             >
               {showPassword ? (
                 <EyeOff size={20} />
@@ -258,13 +282,15 @@ export default function Login() {
         </form>
 
         {/* Footer */}
-        <div
-          className="
-          mt-8
-          text-center
-          text-gray-400
-          "
+       <div
+  className={`mt-8 text-center ${
+    theme === "dark"
+      ? "text-gray-400"
+      : "text-slate-600"
+  }`}
+
         >
+          
           Don't have an account?{" "}
           <Link
             to="/register"
