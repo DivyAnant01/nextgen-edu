@@ -7,6 +7,14 @@ import {
 
 import toast from "react-hot-toast";
 
+import {
+  useActivity,
+} from "./ActivityContext";
+
+import {
+  useNotification,
+} from "./NotificationContext";
+
 const ApplicationContext =
   createContext();
 
@@ -25,6 +33,14 @@ export function ApplicationProvider({
         ? JSON.parse(saved)
         : [];
     });
+
+  const {
+    addActivity,
+  } = useActivity();
+
+  const {
+    addNotification,
+  } = useNotification();
 
   useEffect(() => {
     localStorage.setItem(
@@ -53,6 +69,14 @@ export function ApplicationProvider({
       ]
     );
 
+    addActivity(
+      `📝 Applied to ${application.university}`
+    );
+
+    addNotification(
+      `Application submitted for ${application.university}`
+    );
+
     toast.success(
       "Application Submitted Successfully"
     );
@@ -61,11 +85,29 @@ export function ApplicationProvider({
   const removeApplication = (
     id
   ) => {
+    const app =
+      applications.find(
+        (item) =>
+          item.id === id
+      );
+
     setApplications(
       applications.filter(
-        (app) =>
-          app.id !== id
+        (item) =>
+          item.id !== id
       )
+    );
+
+    addActivity(
+      app
+        ? `🗑️ Removed application for ${app.university}`
+        : "🗑️ Application Removed"
+    );
+
+    addNotification(
+      app
+        ? `Application removed for ${app.university}`
+        : "Application Removed"
     );
 
     toast.success(
@@ -77,16 +119,34 @@ export function ApplicationProvider({
     id,
     status
   ) => {
+    const app =
+      applications.find(
+        (item) =>
+          item.id === id
+      );
+
     setApplications(
       applications.map(
-        (app) =>
-          app.id === id
+        (item) =>
+          item.id === id
             ? {
-                ...app,
+                ...item,
                 status,
               }
-            : app
+            : item
       )
+    );
+
+    addActivity(
+      app
+        ? `📌 ${app.university} status updated to ${status}`
+        : `📌 Application status updated`
+    );
+
+    addNotification(
+      app
+        ? `${app.university} status changed to ${status}`
+        : `Application status changed`
     );
   };
 

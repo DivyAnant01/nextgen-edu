@@ -1,43 +1,56 @@
-import { useApplications } from "../../context/ApplicationContext";
+import {
+  useActivity,
+} from "../../context/ActivityContext";
 
 export default function RecentActivity() {
-  const { applications } = useApplications();
+  const {
+    activities,
+  } = useActivity();
 
   return (
     <div className="glass p-6 rounded-3xl">
+
       <h2 className="text-2xl font-bold mb-6">
         Recent Activity
       </h2>
 
-      {applications.length === 0 ? (
+      {activities.length === 0 ? (
+
         <p className="text-gray-400">
           No recent activity
         </p>
+
       ) : (
+
         <div className="space-y-4">
-          {applications
-            .slice()
-            .reverse()
-            .slice(0, 5)
-            .map((app) => (
+
+          {activities
+            .slice(0, 8)
+            .map((activity) => (
+
               <div
-                key={app.id}
-                className="border-b border-white/10 pb-3"
+                key={activity.id}
+                className="
+                border-b
+                border-white/10
+                pb-3
+                "
               >
                 <p>
-                  Applied for{" "}
-                  <strong>
-                    {app.university}
-                  </strong>
+                  {activity.text}
                 </p>
 
                 <p className="text-sm text-gray-400">
-                  {app.appliedAt}
+                  {activity.date}
                 </p>
               </div>
+
             ))}
+
         </div>
+
       )}
+
     </div>
   );
 }

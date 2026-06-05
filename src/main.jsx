@@ -9,6 +9,8 @@ import { Toaster } from "react-hot-toast";
 
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { ActivityProvider } from "./context/ActivityContext";
+import { NotificationProvider } from "./context/NotificationContext";
 import { ApplicationProvider } from "./context/ApplicationContext";
 import { CompareProvider } from "./context/CompareContext";
 import { WishlistProvider } from "./context/WishlistContext";
@@ -22,24 +24,32 @@ ReactDOM.createRoot(
 
       <AuthProvider>
 
-        <ApplicationProvider>
+        <ActivityProvider>
 
-          <CompareProvider>
+          <NotificationProvider>
 
-            <WishlistProvider>
+            <ApplicationProvider>
 
-              <App />
+              <CompareProvider>
 
-              <Toaster
-                position="top-right"
-                reverseOrder={false}
-              />
+                <WishlistProvider>
 
-            </WishlistProvider>
+                  <App />
 
-          </CompareProvider>
+                  <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                  />
 
-        </ApplicationProvider>
+                </WishlistProvider>
+
+              </CompareProvider>
+
+            </ApplicationProvider>
+
+          </NotificationProvider>
+
+        </ActivityProvider>
 
       </AuthProvider>
 

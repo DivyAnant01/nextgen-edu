@@ -7,6 +7,14 @@ import {
 
 import toast from "react-hot-toast";
 
+import {
+  useActivity,
+} from "./ActivityContext";
+
+import {
+  useNotification,
+} from "./NotificationContext";
+
 const WishlistContext =
   createContext();
 
@@ -24,6 +32,14 @@ export function WishlistProvider({
         ? JSON.parse(saved)
         : [];
     });
+
+  const {
+    addActivity,
+  } = useActivity();
+
+  const {
+    addNotification,
+  } = useNotification();
 
   useEffect(() => {
     localStorage.setItem(
@@ -54,6 +70,14 @@ export function WishlistProvider({
       university,
     ]);
 
+    addActivity(
+      `❤️ Added ${university.name} to Wishlist`
+    );
+
+    addNotification(
+      `${university.name} added to Wishlist`
+    );
+
     toast.success(
       "Added to Wishlist"
     );
@@ -62,6 +86,12 @@ export function WishlistProvider({
   const removeFromWishlist = (
     id
   ) => {
+    const university =
+      wishlist.find(
+        (item) =>
+          item.id === id
+      );
+
     setWishlist(
       wishlist.filter(
         (item) =>
@@ -69,8 +99,36 @@ export function WishlistProvider({
       )
     );
 
+    addActivity(
+      university
+        ? `🗑️ Removed ${university.name} from Wishlist`
+        : "🗑️ Removed a university from Wishlist"
+    );
+
+    addNotification(
+      university
+        ? `${university.name} removed from Wishlist`
+        : "University removed from Wishlist"
+    );
+
     toast.success(
       "Removed from Wishlist"
+    );
+  };
+
+  const clearWishlist = () => {
+    setWishlist([]);
+
+    addActivity(
+      "🧹 Wishlist Cleared"
+    );
+
+    addNotification(
+      "Wishlist Cleared"
+    );
+
+    toast.success(
+      "Wishlist Cleared"
     );
   };
 
@@ -80,6 +138,7 @@ export function WishlistProvider({
         wishlist,
         addToWishlist,
         removeFromWishlist,
+        clearWishlist,
       }}
     >
       {children}

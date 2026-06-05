@@ -7,6 +7,14 @@ import {
 
 import toast from "react-hot-toast";
 
+import {
+  useActivity,
+} from "./ActivityContext";
+
+import {
+  useNotification,
+} from "./NotificationContext";
+
 const CompareContext =
   createContext();
 
@@ -24,6 +32,14 @@ export function CompareProvider({
         ? JSON.parse(saved)
         : [];
     });
+
+  const {
+    addActivity,
+  } = useActivity();
+
+  const {
+    addNotification,
+  } = useNotification();
 
   useEffect(() => {
     localStorage.setItem(
@@ -62,6 +78,14 @@ export function CompareProvider({
       university,
     ]);
 
+    addActivity(
+      `⚖️ Added ${university.name} to Compare`
+    );
+
+    addNotification(
+      `${university.name} added to Compare`
+    );
+
     toast.success(
       "Added to Compare"
     );
@@ -70,10 +94,27 @@ export function CompareProvider({
   const removeFromCompare = (
     id
   ) => {
+    const university =
+      compareList.find(
+        (u) => u.id === id
+      );
+
     setCompareList(
       compareList.filter(
         (u) => u.id !== id
       )
+    );
+
+    addActivity(
+      university
+        ? `❌ Removed ${university.name} from Compare`
+        : "❌ Removed a university from Compare"
+    );
+
+    addNotification(
+      university
+        ? `${university.name} removed from Compare`
+        : "University removed from Compare"
     );
 
     toast.success(
@@ -83,6 +124,14 @@ export function CompareProvider({
 
   const clearCompare = () => {
     setCompareList([]);
+
+    addActivity(
+      "🧹 Compare List Cleared"
+    );
+
+    addNotification(
+      "Compare List Cleared"
+    );
 
     toast.success(
       "Compare List Cleared"
