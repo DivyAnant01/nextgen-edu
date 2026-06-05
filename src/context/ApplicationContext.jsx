@@ -92,10 +92,11 @@ export function ApplicationProvider({
       );
 
     setApplications(
-      applications.filter(
-        (item) =>
-          item.id !== id
-      )
+      (prev) =>
+        prev.filter(
+          (item) =>
+            item.id !== id
+        )
     );
 
     addActivity(
@@ -126,27 +127,31 @@ export function ApplicationProvider({
       );
 
     setApplications(
-      applications.map(
-        (item) =>
+      (prev) =>
+        prev.map((item) =>
           item.id === id
             ? {
                 ...item,
                 status,
               }
             : item
-      )
+        )
     );
 
     addActivity(
       app
         ? `📌 ${app.university} status updated to ${status}`
-        : `📌 Application status updated`
+        : "📌 Application status updated"
     );
 
     addNotification(
       app
         ? `${app.university} status changed to ${status}`
-        : `Application status changed`
+        : "Application status changed"
+    );
+
+    toast.success(
+      `Status Updated: ${status}`
     );
   };
 

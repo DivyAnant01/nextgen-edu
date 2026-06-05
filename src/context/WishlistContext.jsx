@@ -65,8 +65,8 @@ export function WishlistProvider({
       return;
     }
 
-    setWishlist([
-      ...wishlist,
+    setWishlist((prev) => [
+      ...prev,
       university,
     ]);
 
@@ -92,8 +92,8 @@ export function WishlistProvider({
           item.id === id
       );
 
-    setWishlist(
-      wishlist.filter(
+    setWishlist((prev) =>
+      prev.filter(
         (item) =>
           item.id !== id
       )

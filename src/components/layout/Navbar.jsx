@@ -14,6 +14,10 @@ import { useCompare } from "../../context/CompareContext";
 import { useApplications } from "../../context/ApplicationContext";
 import { useTheme } from "../../context/ThemeContext";
 
+import {
+  useNotification,
+} from "../../context/NotificationContext";
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] =
     useState(false);
@@ -34,6 +38,10 @@ export default function Navbar() {
     theme,
     toggleTheme,
   } = useTheme();
+
+  const {
+  unreadCount,
+} = useNotification();
 
   const navClass = ({ isActive }) =>
     isActive
@@ -185,33 +193,35 @@ export default function Navbar() {
           {/* Notification */}
 
           {user && (
-            <Link
-              to="/notifications"
-              className="
-              relative
-              p-2
-              rounded-xl
-              bg-white/10
-              hover:bg-white/20
-              "
-            >
-              <Bell size={18} />
+  <Link
+    to="/notifications"
+    className="
+    relative
+    p-2
+    rounded-xl
+    bg-white/10
+    hover:bg-white/20
+    "
+  >
+    <Bell size={18} />
 
-              <span
-                className="
-                absolute
-                -top-1
-                -right-1
-                bg-red-500
-                text-[10px]
-                px-1.5
-                rounded-full
-                "
-              >
-                3
-              </span>
-            </Link>
-          )}
+    {unreadCount > 0 && (
+      <span
+        className="
+        absolute
+        -top-1
+        -right-1
+        bg-red-500
+        text-[10px]
+        px-1.5
+        rounded-full
+        "
+      >
+        {unreadCount}
+      </span>
+    )}
+  </Link>
+)}
 
           {/* Guest Buttons */}
 
