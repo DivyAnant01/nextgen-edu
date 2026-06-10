@@ -1,259 +1,239 @@
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ArrowRight, BadgeCheck } from "lucide-react";
 
 export default function Hero() {
+  const images = [
+    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2000",
+    "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2000",
+    "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2000",
+  ];
+
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) =>
+        prev === images.length - 1 ? 0 : prev + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
+    <section className="relative min-h-screen flex items-center overflow-hidden text-white">
+
+      {/* Background Slider */}
 
       <div className="absolute inset-0">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentImage}
+            src={images[currentImage]}
+            alt=""
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, scale: 1.05 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5 }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
 
-        <div
-          className="
-          absolute
-          top-20
-          left-20
-          w-72
-          h-72
-          bg-cyan-500/20
-          blur-[120px]
-          "
-        />
+        <div className="absolute inset-0 bg-black/50" />
 
-        <div
-          className="
-          absolute
-          bottom-20
-          right-20
-          w-72
-          h-72
-          bg-purple-500/20
-          blur-[120px]
-          "
-        />
-
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
       </div>
 
-      <div
-        className="
-        max-w-7xl
-        mx-auto
-        px-6
-        relative
-        z-10
-        grid
-        lg:grid-cols-2
-        gap-12
-        items-center
-        "
-      >
+      <div className="max-w-6xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-10 items-center">
 
-        {/* LEFT */}
+        {/* LEFT CONTENT */}
 
         <div>
 
-          <motion.h1
-            initial={{
-              opacity: 0,
-              y: 50,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 1,
-            }}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             className="
-            text-5xl
-            md:text-7xl
-            font-black
-            leading-tight
+              inline-flex
+              items-center
+              gap-2
+              px-4
+              py-2
+              rounded-full
+              bg-white/10
+              backdrop-blur-md
+              border
+              border-white/20
+              mb-6
             "
           >
-            Get Admission In
-
-            <span className="gradient-text">
-              {" "}Top Online Universities
+            <BadgeCheck size={16} />
+            <span className="text-sm">
+              Trusted Admission Partner
             </span>
+          </motion.div>
 
+          <motion.h1
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="
+              text-4xl
+              md:text-5xl
+              font-bold
+              leading-tight
+            "
+          >
+            Find The Right
+            <span className="block text-cyan-400">
+              Online University
+            </span>
           </motion.h1>
 
           <motion.p
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              delay: 0.3,
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
             className="
-            mt-6
-            text-xl
-            text-gray-400
-            max-w-2xl
+              mt-5
+              text-lg
+              text-gray-200
+              max-w-lg
             "
           >
-            Free Career Counselling,
-            Admission Guidance,
-            University Selection,
-            Scholarships & End-to-End Support
-            from expert counsellors.
+            Get admission guidance, career counselling,
+            scholarship assistance and complete support
+            from experienced counsellors.
           </motion.p>
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.5,
-            }}
-            className="
-            flex
-            flex-wrap
-            gap-4
-            mt-8
-            "
-          >
+          <div className="flex flex-wrap gap-4 mt-8">
 
             <a
               href="#counselling-form"
               className="
-              bg-cyan-500
-              px-8
-              py-4
-              rounded-2xl
-              font-semibold
-              hover:scale-105
-              duration-300
+                px-7
+                py-3
+                rounded-xl
+                bg-cyan-500
+                hover:bg-cyan-600
+                duration-300
+                flex
+                items-center
+                gap-2
+                font-medium
               "
             >
               Get Free Counselling
+              <ArrowRight size={18} />
             </a>
 
             <Link
               to="/universities"
               className="
-              border
-              border-white/20
-              px-8
-              py-4
-              rounded-2xl
-              hover:bg-white/10
-              duration-300
+                px-7
+                py-3
+                rounded-xl
+                border
+                border-white/30
+                backdrop-blur-md
+                hover:bg-white/10
+                duration-300
               "
             >
               Explore Universities
             </Link>
 
-          </motion.div>
+          </div>
 
-          {/* STATS */}
-
-          <div
-            className="
-            grid
-            grid-cols-3
-            gap-6
-            mt-12
-            "
-          >
+          <div className="flex gap-8 mt-10">
 
             <div>
-              <h3 className="text-3xl font-bold text-cyan-400">
+              <h3 className="text-2xl font-bold text-cyan-400">
                 150+
               </h3>
-
-              <p className="text-gray-400">
+              <p className="text-gray-300 text-sm">
                 Universities
               </p>
             </div>
 
             <div>
-              <h3 className="text-3xl font-bold text-purple-400">
+              <h3 className="text-2xl font-bold text-purple-400">
                 500+
               </h3>
-
-              <p className="text-gray-400">
+              <p className="text-gray-300 text-sm">
                 Courses
               </p>
             </div>
 
             <div>
-              <h3 className="text-3xl font-bold text-green-400">
+              <h3 className="text-2xl font-bold text-green-400">
                 10K+
               </h3>
-
-              <p className="text-gray-400">
-                Admissions Assisted
+              <p className="text-gray-300 text-sm">
+                Students
               </p>
             </div>
 
           </div>
 
         </div>
+                {/* RIGHT IMAGE */}
 
-        {/* RIGHT */}
+        <div className="hidden lg:flex justify-center">
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            x: 100,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-          }}
-          transition={{
-            duration: 1,
-          }}
-          className="relative"
-        >
-
-          <img
-            src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1400"
-            alt="Admission Counselling"
-            className="
-            rounded-[40px]
-            shadow-2xl
-            border
-            border-white/10
-            "
-          />
-
-          <div
-            className="
-            absolute
-            -bottom-6
-            -left-6
-            glass
-            p-4
-            rounded-2xl
-            "
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative"
           >
-            🎓 Admissions Open 2026
-          </div>
+            <motion.img
+              animate={{
+                y: [0, -10, 0],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 4,
+              }}
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400"
+              alt="Students"
+              className="
+                w-[450px]
+                rounded-3xl
+                shadow-2xl
+                border
+                border-white/20
+              "
+            />
 
-          <div
-            className="
-            absolute
-            -top-6
-            -right-6
-            glass
-            p-4
-            rounded-2xl
-            "
-          >
-            📞 Free Counselling
-          </div>
+            <div
+              className="
+                absolute
+                bottom-5
+                left-5
+                bg-white/10
+                backdrop-blur-md
+                border
+                border-white/20
+                rounded-2xl
+                px-5
+                py-3
+              "
+            >
+              <h4 className="font-semibold">
+                Admissions Open 2026
+              </h4>
 
-        </motion.div>
+              <p className="text-sm text-gray-300">
+                Apply with expert guidance
+              </p>
+            </div>
+
+          </motion.div>
+
+        </div>
 
       </div>
 

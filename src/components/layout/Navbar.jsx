@@ -156,7 +156,7 @@ export default function Navbar() {
             hover:bg-cyan-600
             "
           >
-            Free Counselling
+            Apply
           </Link>
 
           <button
@@ -257,7 +257,7 @@ export default function Navbar() {
               text-center
               "
             >
-              Free Counselling
+              Apply
             </Link>
 
           </div>
