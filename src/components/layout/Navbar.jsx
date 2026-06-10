@@ -5,43 +5,18 @@ import {
   X,
   Moon,
   Sun,
-  Bell,
 } from "lucide-react";
 
-import { useAuth } from "../../context/AuthContext";
-import { useWishlist } from "../../context/WishlistContext";
-import { useCompare } from "../../context/CompareContext";
-import { useApplications } from "../../context/ApplicationContext";
 import { useTheme } from "../../context/ThemeContext";
-
-import {
-  useNotification,
-} from "../../context/NotificationContext";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] =
     useState(false);
 
-  const { user, logout } =
-    useAuth();
-
-  const { wishlist } =
-    useWishlist();
-
-  const { compareList } =
-    useCompare();
-
-  const { applications } =
-    useApplications();
-
   const {
     theme,
     toggleTheme,
   } = useTheme();
-
-  const {
-  unreadCount,
-} = useNotification();
 
   const navClass = ({ isActive }) =>
     isActive
@@ -122,44 +97,26 @@ export default function Navbar() {
           </NavLink>
 
           <NavLink
-            to="/reviews"
+            to="/admission"
             className={navClass}
           >
-            Reviews
+            Admission
           </NavLink>
 
           <NavLink
-            to="/scholarships"
+            to="/about"
             className={navClass}
           >
-            Scholarships
+            About Us
           </NavLink>
 
           <NavLink
-            to="/compare"
+            to="/contact"
             className={navClass}
           >
-            Compare ({compareList.length})
+            Contact
           </NavLink>
-
-          <NavLink
-            to="/wishlist"
-            className={navClass}
-          >
-            Wishlist ({wishlist.length})
-          </NavLink>
-
-          {user && (
-            <NavLink
-              to="/applications"
-              className={navClass}
-            >
-              Applications (
-              {applications.length}
-              )
-            </NavLink>
-          )}
-                  </div>
+        </div>
 
         {/* Right Section */}
 
@@ -167,13 +124,10 @@ export default function Navbar() {
           className="
           flex
           items-center
-          gap-2
-          shrink-0
+          gap-3
           ml-auto
           "
         >
-          {/* Theme Toggle */}
-
           <button
             onClick={toggleTheme}
             className="
@@ -190,129 +144,20 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* Notification */}
-
-          {user && (
-  <Link
-    to="/notifications"
-    className="
-    relative
-    p-2
-    rounded-xl
-    bg-white/10
-    hover:bg-white/20
-    "
-  >
-    <Bell size={18} />
-
-    {unreadCount > 0 && (
-      <span
-        className="
-        absolute
-        -top-1
-        -right-1
-        bg-red-500
-        text-[10px]
-        px-1.5
-        rounded-full
-        "
-      >
-        {unreadCount}
-      </span>
-    )}
-  </Link>
-)}
-
-          {/* Guest Buttons */}
-
-          {!user ? (
-            <div
-              className="
-              hidden
-              xl:flex
-              items-center
-              gap-3
-              "
-            >
-              <NavLink
-                to="/login"
-                className={navClass}
-              >
-                Login
-              </NavLink>
-
-              <Link
-                to="/register"
-                className="
-                bg-cyan-500
-                px-3
-                py-2
-                text-sm
-                rounded-xl
-                hover:bg-cyan-600
-                whitespace-nowrap
-                "
-              >
-                Register
-              </Link>
-            </div>
-          ) : (
-            <div
-              className="
-              hidden
-              xl:flex
-              items-center
-              gap-2
-              "
-            >
-              <Link
-                to="/dashboard"
-                className="
-                bg-purple-500
-                px-3
-                py-2
-                text-sm
-                rounded-xl
-                hover:bg-purple-600
-                whitespace-nowrap
-                "
-              >
-                Dashboard
-              </Link>
-
-              <Link
-                to="/profile"
-                className="
-                bg-white/10
-                px-3
-                py-2
-                text-sm
-                rounded-xl
-                max-w-[140px]
-                truncate
-                "
-              >
-                {user?.name}
-              </Link>
-
-              <button
-                onClick={logout}
-                className="
-                bg-red-500
-                px-3
-                py-2
-                text-sm
-                rounded-xl
-                hover:bg-red-600
-                whitespace-nowrap
-                "
-              >
-                Logout
-              </button>
-            </div>
-          )}
-
-          {/* Mobile Toggle */}
+          <Link
+            to="/contact"
+            className="
+            hidden
+            xl:block
+            bg-cyan-500
+            px-4
+            py-2
+            rounded-xl
+            hover:bg-cyan-600
+            "
+          >
+            Free Counselling
+          </Link>
 
           <button
             onClick={() =>
@@ -333,7 +178,7 @@ export default function Navbar() {
         </div>
       </div>
 
-            {/* Mobile Menu */}
+      {/* Mobile Menu */}
 
       {mobileOpen && (
         <div
@@ -374,115 +219,47 @@ export default function Navbar() {
             </NavLink>
 
             <NavLink
-              to="/reviews"
+              to="/admission"
               onClick={() =>
                 setMobileOpen(false)
               }
             >
-              Reviews
+              Admission
             </NavLink>
 
             <NavLink
-              to="/scholarships"
+              to="/about"
               onClick={() =>
                 setMobileOpen(false)
               }
             >
-              Scholarships
+              About Us
             </NavLink>
 
             <NavLink
-              to="/wishlist"
+              to="/contact"
               onClick={() =>
                 setMobileOpen(false)
               }
             >
-              Wishlist ({wishlist.length})
+              Contact
             </NavLink>
 
-            <NavLink
-              to="/compare"
+            <Link
+              to="/contact"
               onClick={() =>
                 setMobileOpen(false)
               }
+              className="
+              bg-cyan-500
+              py-2
+              rounded-xl
+              text-center
+              "
             >
-              Compare ({compareList.length})
-            </NavLink>
+              Free Counselling
+            </Link>
 
-            {user && (
-              <>
-                <NavLink
-                  to="/applications"
-                  onClick={() =>
-                    setMobileOpen(false)
-                  }
-                >
-                  Applications (
-                  {applications.length}
-                  )
-                </NavLink>
-
-                <NavLink
-                  to="/dashboard"
-                  onClick={() =>
-                    setMobileOpen(false)
-                  }
-                >
-                  Dashboard
-                </NavLink>
-
-                <NavLink
-                  to="/profile"
-                  onClick={() =>
-                    setMobileOpen(false)
-                  }
-                >
-                  Profile
-                </NavLink>
-
-                <button
-                  onClick={() => {
-                    logout();
-                    setMobileOpen(false);
-                  }}
-                  className="
-                  bg-red-500
-                  py-2
-                  rounded-xl
-                  "
-                >
-                  Logout
-                </button>
-              </>
-            )}
-
-            {!user && (
-              <>
-                <NavLink
-                  to="/login"
-                  onClick={() =>
-                    setMobileOpen(false)
-                  }
-                >
-                  Login
-                </NavLink>
-
-                <Link
-                  to="/register"
-                  onClick={() =>
-                    setMobileOpen(false)
-                  }
-                  className="
-                  bg-cyan-500
-                  py-2
-                  rounded-xl
-                  text-center
-                  "
-                >
-                  Register
-                </Link>
-              </>
-            )}
           </div>
         </div>
       )}

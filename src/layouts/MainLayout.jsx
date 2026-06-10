@@ -4,7 +4,6 @@ import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 
 import FloatingAdmission from "../components/common/FloatingAdmission";
-import CompareWidget from "../components/common/CompareWidget";
 
 export default function MainLayout() {
   return (
@@ -12,8 +11,6 @@ export default function MainLayout() {
       <Navbar />
 
       <Outlet />
-
-      <CompareWidget />
 
       <FloatingAdmission />
 

@@ -5,7 +5,6 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
 
-      {/* Background Blur Effects */}
       <div className="absolute inset-0">
 
         <div
@@ -48,7 +47,7 @@ export default function Hero() {
         "
       >
 
-        {/* LEFT CONTENT */}
+        {/* LEFT */}
 
         <div>
 
@@ -71,10 +70,10 @@ export default function Hero() {
             leading-tight
             "
           >
-            Find Your
+            Get Admission In
 
             <span className="gradient-text">
-              {" "}Dream University
+              {" "}Top Online Universities
             </span>
 
           </motion.h1>
@@ -87,7 +86,7 @@ export default function Hero() {
               opacity: 1,
             }}
             transition={{
-              delay: 0.4,
+              delay: 0.3,
             }}
             className="
             mt-6
@@ -96,14 +95,12 @@ export default function Hero() {
             max-w-2xl
             "
           >
-            Discover Top Universities,
-            Online Degrees,
-            Scholarships,
-            Career Guidance
-            and Admission Support.
+            Free Career Counselling,
+            Admission Guidance,
+            University Selection,
+            Scholarships & End-to-End Support
+            from expert counsellors.
           </motion.p>
-
-          {/* CTA Buttons */}
 
           <motion.div
             initial={{
@@ -115,7 +112,7 @@ export default function Hero() {
               y: 0,
             }}
             transition={{
-              delay: 0.6,
+              delay: 0.5,
             }}
             className="
             flex
@@ -125,8 +122,8 @@ export default function Hero() {
             "
           >
 
-            <Link
-              to="/universities"
+            <a
+              href="#counselling-form"
               className="
               bg-cyan-500
               px-8
@@ -137,11 +134,11 @@ export default function Hero() {
               duration-300
               "
             >
-              Explore Universities
-            </Link>
+              Get Free Counselling
+            </a>
 
             <Link
-              to="/courses"
+              to="/universities"
               className="
               border
               border-white/20
@@ -152,23 +149,14 @@ export default function Hero() {
               duration-300
               "
             >
-              Browse Courses
+              Explore Universities
             </Link>
 
           </motion.div>
 
-          {/* Stats */}
+          {/* STATS */}
 
-          <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              delay: 0.8,
-            }}
+          <div
             className="
             grid
             grid-cols-3
@@ -181,6 +169,7 @@ export default function Hero() {
               <h3 className="text-3xl font-bold text-cyan-400">
                 150+
               </h3>
+
               <p className="text-gray-400">
                 Universities
               </p>
@@ -190,6 +179,7 @@ export default function Hero() {
               <h3 className="text-3xl font-bold text-purple-400">
                 500+
               </h3>
+
               <p className="text-gray-400">
                 Courses
               </p>
@@ -197,18 +187,19 @@ export default function Hero() {
 
             <div>
               <h3 className="text-3xl font-bold text-green-400">
-                50K+
+                10K+
               </h3>
+
               <p className="text-gray-400">
-                Students
+                Admissions Assisted
               </p>
             </div>
 
-          </motion.div>
+          </div>
 
         </div>
 
-        {/* RIGHT IMAGE */}
+        {/* RIGHT */}
 
         <motion.div
           initial={{
@@ -227,7 +218,7 @@ export default function Hero() {
 
           <img
             src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1400"
-            alt="University"
+            alt="Admission Counselling"
             className="
             rounded-[40px]
             shadow-2xl
@@ -246,7 +237,7 @@ export default function Hero() {
             rounded-2xl
             "
           >
-            🎓 Admission Open 2026
+            🎓 Admissions Open 2026
           </div>
 
           <div
@@ -259,7 +250,7 @@ export default function Hero() {
             rounded-2xl
             "
           >
-            ⭐ Top Rated Universities
+            📞 Free Counselling
           </div>
 
         </motion.div>

@@ -33,9 +33,9 @@ export default function CourseCard({
           {course.duration}
         </p>
 
-        <p className="mt-3">
-          ₹ {course.fees}
-        </p>
+        <p className="mt-3 text-gray-400">
+  Duration: {course.duration}
+</p>
 
         <Link
           to={`/courses/${course.slug}`}
@@ -48,7 +48,7 @@ export default function CourseCard({
           rounded-xl
           "
         >
-          View Course
+          Know More
         </Link>
 
       </div>

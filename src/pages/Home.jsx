@@ -8,8 +8,6 @@ import CounsellingForm from "../components/home/CounsellingForm";
 import Testimonials from "../components/home/Testimonials";
 import FAQ from "../components/home/FAQ";
 import CTASection from "../components/home/CTASection";
-import EMICalculator
-from "../components/common/EMICalculator";
 
 export default function Home() {
   return (
@@ -24,7 +22,6 @@ export default function Home() {
       <Testimonials />
       <FAQ />
       <CTASection />
-      <EMICalculator />
     </>
   );
 }

@@ -1,20 +1,5 @@
-const universities = [
-  {
-    id: 1,
-    name: "Amity University",
-    location: "Noida",
-  },
-  {
-    id: 2,
-    name: "LPU",
-    location: "Punjab",
-  },
-  {
-    id: 3,
-    name: "Manipal University",
-    location: "Jaipur",
-  },
-];
+import { Link } from "react-router-dom";
+import { universities } from "../../data/universities";
 
 export default function UniversitiesSection() {
   return (
@@ -22,54 +7,107 @@ export default function UniversitiesSection() {
 
       <div className="max-w-7xl mx-auto px-6">
 
-        <h2 className="text-5xl font-bold mb-14">
-          Featured Universities
-        </h2>
+        <div className="flex justify-between items-center mb-14">
+
+          <div>
+
+            <h2 className="text-5xl font-bold">
+              Top Universities
+            </h2>
+
+            <p className="text-gray-400 mt-3">
+              Explore UGC approved universities
+              with expert admission guidance.
+            </p>
+
+          </div>
+
+          <Link
+            to="/universities"
+            className="
+            hidden md:block
+            bg-cyan-500
+            px-6
+            py-3
+            rounded-xl
+            "
+          >
+            View All
+          </Link>
+
+        </div>
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {universities.map((item) => (
-            <div
-              key={item.id}
-              className="
-              glass
-              rounded-3xl
-              overflow-hidden
-              "
-            >
+          {universities
+            .slice(0, 6)
+            .map((university) => (
 
-              <img
-                src="https://placehold.co/600x400"
-                alt=""
-                className="w-full"
-              />
+              <div
+                key={university.id}
+                className="
+                glass
+                rounded-3xl
+                overflow-hidden
+                "
+              >
 
-              <div className="p-6">
-
-                <h3 className="text-2xl font-bold">
-                  {item.name}
-                </h3>
-
-                <p className="text-gray-400 mt-2">
-                  {item.location}
-                </p>
-
-                <button
+                <img
+                  src={
+                    university.banner ||
+                    university.image
+                  }
+                  alt={university.name}
                   className="
-                  mt-5
-                  bg-cyan-500
-                  px-5
-                  py-3
-                  rounded-xl
+                  w-full
+                  h-56
+                  object-cover
                   "
-                >
-                  View Details
-                </button>
+                />
+
+                <div className="p-6">
+
+                  <h3 className="text-2xl font-bold">
+                    {university.name}
+                  </h3>
+
+                  <p className="text-gray-400 mt-2">
+                    📍 {university.location}
+                  </p>
+
+                  <div className="flex gap-4 mt-4">
+
+                    <span>
+                      ⭐ {university.rating}
+                    </span>
+
+                    <span>
+                      ₹ {Number(
+                        university.fees
+                      ).toLocaleString()}
+                    </span>
+
+                  </div>
+
+                  <Link
+                    to={`/universities/${university.slug}`}
+                    className="
+                    inline-block
+                    mt-6
+                    bg-cyan-500
+                    px-5
+                    py-3
+                    rounded-xl
+                    "
+                  >
+                    View Details
+                  </Link>
+
+                </div>
 
               </div>
 
-            </div>
-          ))}
+            ))}
 
         </div>
 
