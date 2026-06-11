@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
 import UniversityCard from "../components/universities/UniversityCard";
 import UniversityFilters from "../components/universities/UniversityFilters";
-import AdvancedFilters from "../components/universities/AdvancedFilters";
 
 import { universities } from "../data/universities";
 
 export default function Universities() {
   const [search, setSearch] = useState("");
-  const [rating, setRating] = useState("");
-  const [sort, setSort] = useState("");
   const [location, setLocation] = useState("");
   const [course, setCourse] = useState("");
-  const [fees, setFees] = useState(60000);
 
   const [currentPage, setCurrentPage] =
   useState(1);
@@ -22,11 +18,9 @@ useEffect(() => {
   setCurrentPage(1);
 }, [
   search,
-  rating,
-  sort,
+ 
   location,
   course,
-  fees,
 ]);
 
   const getFeeValue = (fee) => {
@@ -45,43 +39,10 @@ useEffect(() => {
       (location === "" ||
         u.location === location) &&
       (course === "" ||
-        u.courses?.includes(course)) &&
-      getFeeValue(u.fees) <= fees
+        u.courses?.includes(course))
   );
 
-  if (rating) {
-    filtered = filtered.filter(
-      (u) => u.rating >= Number(rating)
-    );
-  }
-
-  if (sort === "high") {
-    filtered = [...filtered].sort(
-      (a, b) => b.rating - a.rating
-    );
-  }
-
-  if (sort === "low") {
-    filtered = [...filtered].sort(
-      (a, b) => a.rating - b.rating
-    );
-  }
-
-  if (sort === "feesLow") {
-    filtered = [...filtered].sort(
-      (a, b) =>
-        getFeeValue(a.fees) -
-        getFeeValue(b.fees)
-    );
-  }
-
-  if (sort === "feesHigh") {
-    filtered = [...filtered].sort(
-      (a, b) =>
-        getFeeValue(b.fees) -
-        getFeeValue(a.fees)
-    );
-  }
+ 
 
   const indexOfLastItem =
   currentPage * itemsPerPage;
@@ -215,34 +176,23 @@ const totalPages =
         {/* Main Filters */}
 
         <UniversityFilters
-          search={search}
-          setSearch={setSearch}
-          rating={rating}
-          setRating={setRating}
-          sort={sort}
-          setSort={setSort}
-        />
+  search={search}
+  setSearch={setSearch}
+  course={course}
+  setCourse={setCourse}
+/>
 
-        {/* Advanced Filters */}
-
-        <div className="my-8">
-          <AdvancedFilters
-            course={course}
-            setCourse={setCourse}
-            fees={fees}
-            setFees={setFees}
-          />
-        </div>
 
         <div className="mb-8">
   <button
     onClick={() => {
       setSearch("");
-      setRating("");
-      setSort("");
+      setSearch("");
+setLocation("");
+setCourse("");
+setCurrentPage(1);
       setLocation("");
       setCourse("");
-      setFees(60000);
       setCurrentPage(1);
     }}
     className="

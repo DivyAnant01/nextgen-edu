@@ -6,14 +6,8 @@ import {
 export default function UniversityFilters({
   search,
   setSearch,
-  rating,
-  setRating,
-  sort,
-  setSort,
   course,
   setCourse,
-  fees,
-  setFees,
 }) {
   return (
     <div
@@ -35,11 +29,11 @@ export default function UniversityFilters({
         <Filter size={20} />
 
         <h2 className="text-2xl font-bold">
-          Advanced Filters
+          Find Your University
         </h2>
       </div>
 
-      <div className="grid md:grid-cols-5 gap-4">
+      <div className="grid md:grid-cols-2 gap-4">
 
         {/* Search */}
 
@@ -56,7 +50,7 @@ export default function UniversityFilters({
 
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Search University..."
             value={search}
             onChange={(e) =>
               setSearch(
@@ -72,39 +66,6 @@ export default function UniversityFilters({
             "
           />
         </div>
-
-        {/* Rating */}
-
-        <select
-          value={rating}
-          onChange={(e) =>
-            setRating(
-              e.target.value
-            )
-          }
-          className="
-          p-4
-          rounded-xl
-          bg-white/10
-          "
-        >
-          <option value="">
-            Rating
-          </option>
-
-          <option value="4">
-            4+
-          </option>
-
-          <option value="4.5">
-            4.5+
-          </option>
-
-          <option value="4.8">
-            4.8+
-          </option>
-
-        </select>
 
         {/* Course */}
 
@@ -122,7 +83,7 @@ export default function UniversityFilters({
           "
         >
           <option value="">
-            Course
+            Select Course
           </option>
 
           <option value="MBA">
@@ -141,76 +102,13 @@ export default function UniversityFilters({
             MCA
           </option>
 
-        </select>
-
-        {/* Fees */}
-
-        <select
-          value={fees}
-          onChange={(e) =>
-            setFees(
-              e.target.value
-            )
-          }
-          className="
-          p-4
-          rounded-xl
-          bg-white/10
-          "
-        >
-          <option value="">
-            Fees
+          <option value="BCom">
+            B.Com
           </option>
 
-          <option value="40000">
-            Below 40k
+          <option value="MCom">
+            M.Com
           </option>
-
-          <option value="50000">
-            Below 50k
-          </option>
-
-          <option value="60000">
-            Below 60k
-          </option>
-
-        </select>
-
-        {/* Sort */}
-
-        <select
-          value={sort}
-          onChange={(e) =>
-            setSort(
-              e.target.value
-            )
-          }
-          className="
-          p-4
-          rounded-xl
-          bg-white/10
-          "
-        >
-          <option value="">
-            Sort
-          </option>
-
-          <option value="high">
-            Rating High
-          </option>
-
-          <option value="low">
-            Rating Low
-          </option>
-
-          <option value="feesLow">
-            Fees Low
-          </option>
-
-          <option value="feesHigh">
-            Fees High
-          </option>
-
         </select>
 
       </div>

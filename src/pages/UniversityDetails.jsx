@@ -6,12 +6,13 @@ import ApplyNowModal from "../components/universities/ApplyNowModal";
 import BrochureModal from "../components/universities/BrochureModal";
 
 export default function UniversityDetails() {
-    const [applyOpen, setApplyOpen] =
-  useState(false);
-
-const [brochureOpen, setBrochureOpen] =
-  useState(false);
   const { slug } = useParams();
+
+  const [applyOpen, setApplyOpen] =
+    useState(false);
+
+  const [brochureOpen, setBrochureOpen] =
+    useState(false);
 
   const university =
     universities.find(
@@ -20,21 +21,24 @@ const [brochureOpen, setBrochureOpen] =
 
   if (!university) {
     return (
-      <div className="pt-40 text-center">
+      <div className="pt-40 text-center text-3xl">
         University Not Found
       </div>
     );
   }
 
   return (
-    <section className="pt-24 pb-20">
+    <section className="pt-32 pb-20">
 
-      {/* HERO */}
+      {/* Hero */}
 
-      <div className="relative h-[500px]">
+      <div className="relative h-[450px]">
 
         <img
-          src={university.image}
+          src={
+            university.banner ||
+            university.image
+          }
           alt={university.name}
           className="
           absolute
@@ -68,8 +72,8 @@ const [brochureOpen, setBrochureOpen] =
               {university.name}
             </h1>
 
-            <p className="mt-4 text-xl">
-              {university.location}
+            <p className="text-xl mt-3">
+              📍 {university.location}
             </p>
 
           </div>
@@ -79,7 +83,7 @@ const [brochureOpen, setBrochureOpen] =
 
       <div className="max-w-7xl mx-auto px-6">
 
-        {/* OVERVIEW */}
+        {/* Overview */}
 
         <div className="glass p-8 rounded-3xl mt-10">
 
@@ -93,7 +97,7 @@ const [brochureOpen, setBrochureOpen] =
 
         </div>
 
-        {/* APPROVALS */}
+        {/* Approvals */}
 
         <div className="glass p-8 rounded-3xl mt-8">
 
@@ -103,18 +107,18 @@ const [brochureOpen, setBrochureOpen] =
 
           <div className="flex gap-3 flex-wrap">
 
-            {university.approvals.map(
-              (approval) => (
+            {university.approvals?.map(
+              (item) => (
                 <span
-                  key={approval}
+                  key={item}
                   className="
                   px-4
                   py-2
-                  bg-cyan-500/20
                   rounded-xl
+                  bg-cyan-500/20
                   "
                 >
-                  {approval}
+                  {item}
                 </span>
               )
             )}
@@ -123,7 +127,7 @@ const [brochureOpen, setBrochureOpen] =
 
         </div>
 
-        {/* COURSES */}
+        {/* Courses */}
 
         <div className="glass p-8 rounded-3xl mt-8">
 
@@ -133,12 +137,12 @@ const [brochureOpen, setBrochureOpen] =
 
           <div className="grid md:grid-cols-4 gap-4">
 
-            {university.courses.map(
+            {university.courses?.map(
               (course) => (
                 <div
                   key={course}
                   className="
-                  bg-white/5
+                  bg-white/10
                   p-4
                   rounded-xl
                   "
@@ -152,7 +156,7 @@ const [brochureOpen, setBrochureOpen] =
 
         </div>
 
-        {/* ELIGIBILITY */}
+        {/* Eligibility */}
 
         <div className="glass p-8 rounded-3xl mt-8">
 
@@ -166,7 +170,7 @@ const [brochureOpen, setBrochureOpen] =
 
         </div>
 
-        {/* ADMISSION */}
+        {/* Admission */}
 
         <div className="glass p-8 rounded-3xl mt-8">
 
@@ -180,7 +184,7 @@ const [brochureOpen, setBrochureOpen] =
 
         </div>
 
-        {/* PLACEMENT */}
+        {/* Placement */}
 
         <div className="glass p-8 rounded-3xl mt-8">
 
@@ -194,136 +198,59 @@ const [brochureOpen, setBrochureOpen] =
 
         </div>
 
-        {/* STATS */}
+        {/* Stats */}
 
-<div className="grid md:grid-cols-4 gap-6 mt-8">
+        <div className="grid md:grid-cols-4 gap-6 mt-8">
 
-  <div className="glass p-6 rounded-2xl text-center">
-    <h3 className="text-3xl font-bold">
-      ⭐ {university.rating}
-    </h3>
-    <p className="text-gray-400 mt-2">
-      Rating
-    </p>
-  </div>
+          <div className="glass p-6 rounded-2xl text-center">
+            <h3 className="text-3xl font-bold">
+              ⭐ {university.rating}
+            </h3>
 
-  <div className="glass p-6 rounded-2xl text-center">
-    <h3 className="text-3xl font-bold">
-      ₹ {Number(
-        university.fees
-      ).toLocaleString()}
-    </h3>
-    <p className="text-gray-400 mt-2">
-      Semester Fees
-    </p>
-  </div>
+            <p className="mt-2 text-gray-400">
+              Rating
+            </p>
+          </div>
 
-  <div className="glass p-6 rounded-2xl text-center">
-    <h3 className="text-3xl font-bold">
-      {university.courses.length}
-    </h3>
-    <p className="text-gray-400 mt-2">
-      Courses
-    </p>
-  </div>
+          <div className="glass p-6 rounded-2xl text-center">
+            <h3 className="text-3xl font-bold">
+              ₹ {Number(
+                university.fees
+              ).toLocaleString()}
+            </h3>
 
-  <div className="glass p-6 rounded-2xl text-center">
-    <h3 className="text-3xl font-bold">
-      {university.approvals.length}
-    </h3>
-    <p className="text-gray-400 mt-2">
-      Approvals
-    </p>
-  </div>
+            <p className="mt-2 text-gray-400">
+              Fees
+            </p>
+          </div>
 
-</div>
+          <div className="glass p-6 rounded-2xl text-center">
+            <h3 className="text-3xl font-bold">
+              {
+                university.courses
+                  ?.length
+              }
+            </h3>
 
-{/* KEY HIGHLIGHTS */}
+            <p className="mt-2 text-gray-400">
+              Courses
+            </p>
+          </div>
 
-<div className="glass p-8 rounded-3xl mt-8">
+          <div className="glass p-6 rounded-2xl text-center">
+            <h3 className="text-3xl font-bold">
+              {
+                university.approvals
+                  ?.length
+              }
+            </h3>
 
-  <h2 className="text-3xl font-bold mb-6">
-    Key Highlights
-  </h2>
+            <p className="mt-2 text-gray-400">
+              Approvals
+            </p>
+          </div>
 
-  <ul className="space-y-4">
-
-    <li>
-      ✅ UGC Approved University
-    </li>
-
-    <li>
-      ✅ Online Admission Process
-    </li>
-
-    <li>
-      ✅ Placement Assistance
-    </li>
-
-    <li>
-      ✅ Industry Relevant Curriculum
-    </li>
-
-    <li>
-      ✅ Flexible Learning Options
-    </li>
-
-  </ul>
-
-</div>
-
-{/* WHY CHOOSE */}
-
-<div className="glass p-8 rounded-3xl mt-8">
-
-  <h2 className="text-3xl font-bold mb-6">
-    Why Choose {university.name}?
-  </h2>
-
-  <p className="leading-8 text-gray-300">
-
-    {university.name}
-    {" "}
-    offers quality education,
-    recognized approvals,
-    experienced faculty,
-    strong placement support
-    and flexible learning
-    options for students
-    across India.
-
-  </p>
-
-</div>
-
-{/* STUDENT REVIEWS */}
-
-<div className="glass p-8 rounded-3xl mt-8">
-
-  <h2 className="text-3xl font-bold mb-6">
-    Student Reviews
-  </h2>
-
-  <div className="space-y-4">
-
-    <div className="bg-white/5 p-4 rounded-xl">
-      ⭐⭐⭐⭐⭐ Excellent learning
-      experience and faculty.
-    </div>
-
-    <div className="bg-white/5 p-4 rounded-xl">
-      ⭐⭐⭐⭐⭐ Admission process
-      was smooth and simple.
-    </div>
-
-    <div className="bg-white/5 p-4 rounded-xl">
-      ⭐⭐⭐⭐ Great placement
-      support and guidance.
-    </div>
-
-  </div>
-
-</div>
+        </div>
 
         {/* CTA */}
 
@@ -342,37 +269,41 @@ const [brochureOpen, setBrochureOpen] =
             Apply for Admission
           </h2>
 
+          <p className="mt-3">
+            Start your admission process today.
+          </p>
+
           <div className="flex gap-4 mt-6">
 
             <button
-  onClick={() =>
-    setApplyOpen(true)
-  }
-  className="
-  bg-white
-  text-black
-  px-6
-  py-3
-  rounded-xl
-  "
->
-  Apply Now
-</button>
+              onClick={() =>
+                setApplyOpen(true)
+              }
+              className="
+              bg-white
+              text-black
+              px-6
+              py-3
+              rounded-xl
+              "
+            >
+              Apply Now
+            </button>
 
             <button
-  onClick={() =>
-    setBrochureOpen(true)
-  }
-  className="
-  border
-  border-white
-  px-6
-  py-3
-  rounded-xl
-  "
->
-  Download Brochure
-</button>
+              onClick={() =>
+                setBrochureOpen(true)
+              }
+              className="
+              border
+              border-white
+              px-6
+              py-3
+              rounded-xl
+              "
+            >
+              Download Brochure
+            </button>
 
           </div>
 
@@ -381,18 +312,20 @@ const [brochureOpen, setBrochureOpen] =
       </div>
 
       <ApplyNowModal
-  isOpen={applyOpen}
-  onClose={() =>
-    setApplyOpen(false)
-  }
-/>
+        isOpen={applyOpen}
+        onClose={() =>
+          setApplyOpen(false)
+        }
+        university={university}
+      />
 
-<BrochureModal
-  isOpen={brochureOpen}
-  onClose={() =>
-    setBrochureOpen(false)
-  }
-/>
+      <BrochureModal
+        isOpen={brochureOpen}
+        onClose={() =>
+          setBrochureOpen(false)
+        }
+        university={university}
+      />
 
     </section>
   );

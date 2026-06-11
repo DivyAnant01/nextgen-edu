@@ -3,15 +3,20 @@ import Modal from "../common/Modal";
 export default function BrochureModal({
   isOpen,
   onClose,
+  university,
 }) {
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
     >
-      <h2 className="text-3xl font-bold mb-6">
+      <h2 className="text-3xl font-bold mb-4">
         Download Brochure
       </h2>
+
+      <p className="mb-6 text-gray-400">
+        {university?.name}
+      </p>
 
       <div className="space-y-4">
 
@@ -26,7 +31,7 @@ export default function BrochureModal({
         />
 
         <input
-          placeholder="Phone"
+          placeholder="Phone Number"
           className="
           w-full
           p-4
@@ -41,6 +46,8 @@ export default function BrochureModal({
           bg-purple-500
           py-4
           rounded-xl
+          hover:bg-purple-600
+          transition
           "
         >
           Download PDF

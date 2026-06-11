@@ -1,140 +1,31 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState } from "react";
 
-import toast from "react-hot-toast";
+const CompareContext = createContext();
 
-import {
-  useActivity,
-} from "./ActivityContext";
+export function CompareProvider({ children }) {
+  const [compareList, setCompareList] = useState([]);
 
-import {
-  useNotification,
-} from "./NotificationContext";
-
-const CompareContext =
-  createContext();
-
-export function CompareProvider({
-  children,
-}) {
-  const [compareList, setCompareList] =
-    useState(() => {
-      const saved =
-        localStorage.getItem(
-          "compareList"
-        );
-
-      return saved
-        ? JSON.parse(saved)
-        : [];
-    });
-
-  const {
-    addActivity,
-  } = useActivity();
-
-  const {
-    addNotification,
-  } = useNotification();
-
-  useEffect(() => {
-    localStorage.setItem(
-      "compareList",
-      JSON.stringify(compareList)
-    );
-  }, [compareList]);
-
-  const addToCompare = (
-    university
-  ) => {
-    const exists =
-      compareList.find(
-        (u) =>
-          u.id === university.id
-      );
-
-    if (exists) {
-      toast.error(
-        "Already Added"
-      );
-      return;
-    }
-
+  const addToCompare = (university) => {
     if (
-      compareList.length >= 3
-    ) {
-      toast.error(
-        "Maximum 3 Universities Allowed"
-      );
+      compareList.find(
+        (u) => u.id === university.id
+      )
+    )
       return;
-    }
+
+    if (compareList.length >= 3) return;
 
     setCompareList([
       ...compareList,
       university,
     ]);
-
-    addActivity(
-      `⚖️ Added ${university.name} to Compare`
-    );
-
-    addNotification(
-      `${university.name} added to Compare`
-    );
-
-    toast.success(
-      "Added to Compare"
-    );
   };
 
-  const removeFromCompare = (
-    id
-  ) => {
-    const university =
-      compareList.find(
-        (u) => u.id === id
-      );
-
+  const removeFromCompare = (id) => {
     setCompareList(
       compareList.filter(
         (u) => u.id !== id
       )
-    );
-
-    addActivity(
-      university
-        ? `❌ Removed ${university.name} from Compare`
-        : "❌ Removed a university from Compare"
-    );
-
-    addNotification(
-      university
-        ? `${university.name} removed from Compare`
-        : "University removed from Compare"
-    );
-
-    toast.success(
-      "Removed from Compare"
-    );
-  };
-
-  const clearCompare = () => {
-    setCompareList([]);
-
-    addActivity(
-      "🧹 Compare List Cleared"
-    );
-
-    addNotification(
-      "Compare List Cleared"
-    );
-
-    toast.success(
-      "Compare List Cleared"
     );
   };
 
@@ -144,7 +35,6 @@ export function CompareProvider({
         compareList,
         addToCompare,
         removeFromCompare,
-        clearCompare,
       }}
     >
       {children}

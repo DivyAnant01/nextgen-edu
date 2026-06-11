@@ -96,12 +96,12 @@ export default function Navbar() {
             Courses
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             to="/admission"
             className={navClass}
           >
             Admission
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             to="/about"
@@ -218,14 +218,14 @@ export default function Navbar() {
               Courses
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               to="/admission"
               onClick={() =>
                 setMobileOpen(false)
               }
             >
               Admission
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/about"
