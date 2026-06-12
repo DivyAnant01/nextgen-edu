@@ -1,40 +1,59 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
-const CompareContext = createContext();
+const CompareContext =
+  createContext();
 
-export function CompareProvider({ children }) {
-  const [compareList, setCompareList] = useState([]);
+export function CompareProvider({
+  children,
+}) {
+  const [compareItems, setCompareItems] =
+    useState([]);
 
-  const addToCompare = (university) => {
+  const addToCompare = (
+    university
+  ) => {
     if (
-      compareList.find(
-        (u) => u.id === university.id
+      compareItems.find(
+        (u) =>
+          u.id === university.id
       )
     )
       return;
 
-    if (compareList.length >= 3) return;
+    if (compareItems.length >= 4)
+      return;
 
-    setCompareList([
-      ...compareList,
+    setCompareItems([
+      ...compareItems,
       university,
     ]);
   };
 
-  const removeFromCompare = (id) => {
-    setCompareList(
-      compareList.filter(
+  const removeFromCompare = (
+    id
+  ) => {
+    setCompareItems(
+      compareItems.filter(
         (u) => u.id !== id
       )
     );
   };
 
+  const clearCompare = () => {
+    setCompareItems([]);
+  };
+
   return (
     <CompareContext.Provider
       value={{
-        compareList,
+        compareItems,
         addToCompare,
         removeFromCompare,
+        clearCompare,
       }}
     >
       {children}

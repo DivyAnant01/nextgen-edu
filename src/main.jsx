@@ -11,16 +11,22 @@ import {
   CompareProvider,
 } from "./context/CompareContext";
 
+
+
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(
   <React.StrictMode>
     <ThemeProvider>
-      <CompareProvider>
-      <App />
-        
-      <Toaster position="top-right" />
-      </CompareProvider>
-    </ThemeProvider>
+  <CompareProvider>
+
+    <App />
+
+    <Toaster
+      position="top-right"
+    />
+
+  </CompareProvider>
+</ThemeProvider>
   </React.StrictMode>
 );

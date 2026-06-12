@@ -19,6 +19,7 @@ import CourseDetails from "../pages/CourseDetails";
 
 import Scholarships from "../pages/Scholarships";
 import Reviews from "../pages/Reviews";
+import CompareUniversities from "../pages/CompareUniversities";
 // import Admission from "../pages/Admission";
 
 export default function AppRoutes() {
@@ -60,16 +61,21 @@ export default function AppRoutes() {
           />
 
           {/* Admission */}
-          {/* <Route
-            path="admission"
-            element={<Admission />}
-          /> */}
+{/* <Route
+  path="admission"
+  element={<Admission />}
+/> */}
 
           {/* Reviews */}
           <Route
             path="reviews"
             element={<Reviews />}
           />
+
+          <Route
+            path="compare"
+            element={<CompareUniversities />}
+/>
         </Route>
       </Routes>
     </BrowserRouter>

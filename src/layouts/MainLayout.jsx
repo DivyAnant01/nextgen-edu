@@ -5,6 +5,9 @@ import Footer from "../components/layout/Footer";
 
 import FloatingAdmission from "../components/common/FloatingAdmission";
 
+import FloatingCompare
+from "../components/common/FloatingCompare";
+
 export default function MainLayout() {
   return (
     <>
@@ -13,6 +16,9 @@ export default function MainLayout() {
       <Outlet />
 
       <FloatingAdmission />
+
+      <FloatingCompare />
+
 
       <Footer />
     </>
