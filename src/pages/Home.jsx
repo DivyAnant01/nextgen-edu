@@ -8,7 +8,7 @@ import CounsellingForm from "../components/home/CounsellingForm";
 import Testimonials from "../components/home/Testimonials";
 import FAQ from "../components/home/FAQ";
 import CTASection from "../components/home/CTASection";
-
+import ProcessSection from "../components/home/ProcessSection";
 export default function Home() {
   return (
     <>
@@ -20,6 +20,7 @@ export default function Home() {
       <WhyChooseUs />
       <CounsellingForm />
       <Testimonials />
+      <ProcessSection />
       <FAQ />
       <CTASection />
     </>

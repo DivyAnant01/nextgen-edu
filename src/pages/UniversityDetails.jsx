@@ -66,8 +66,7 @@ export default function UniversityDetails() {
           items-center
           "
         >
-          <div className="max-w-7xl mx-auto px-6">
-
+         <div className="max-w-7xl mx-auto px-6">
             <div className="flex gap-3 flex-wrap mb-4">
 
               {university.approvals?.map(
@@ -453,25 +452,30 @@ export default function UniversityDetails() {
           </div>
 
         </div>
+            </div>
 
-      </div>
+    {/* Sticky Sidebar */}
 
-      <ApplyNowModal
-        isOpen={applyOpen}
-        onClose={() =>
-          setApplyOpen(false)
-        }
-        university={university}
-      />
+    
 
-      <BrochureModal
-        isOpen={brochureOpen}
-        onClose={() =>
-          setBrochureOpen(false)
-        }
-        university={university}
-      />
+          
 
-    </section>
-  );
+    <ApplyNowModal
+      isOpen={applyOpen}
+      onClose={() =>
+        setApplyOpen(false)
+      }
+      university={university}
+    />
+
+    <BrochureModal
+      isOpen={brochureOpen}
+      onClose={() =>
+        setBrochureOpen(false)
+      }
+      university={university}
+    />
+
+  </section>
+);
 }

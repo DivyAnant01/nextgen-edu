@@ -1,123 +1,104 @@
-import { Link } from "react-router-dom";
-import { universities } from "../data/universities";
+import { motion } from "framer-motion";
 
-export default function Universities() {
+const testimonials = [
+  {
+    id: 1,
+    name: "Rahul Sharma",
+    course: "Online MBA",
+    image:
+      "https://randomuser.me/api/portraits/men/32.jpg",
+    review:
+      "NextGenEdu helped me choose the best university. Admission process was smooth and quick.",
+  },
+
+  {
+    id: 2,
+    name: "Priya Verma",
+    course: "BCA Online",
+    image:
+      "https://randomuser.me/api/portraits/women/44.jpg",
+    review:
+      "Very supportive counselling team. I got admission without any hassle.",
+  },
+
+  {
+    id: 3,
+    name: "Aman Singh",
+    course: "MCA",
+    image:
+      "https://randomuser.me/api/portraits/men/12.jpg",
+    review:
+      "Excellent guidance from admission to fee payment. Highly recommended.",
+  },
+];
+
+export default function Testimonials() {
   return (
-    <section className="pt-32 pb-20">
-
+    <section className="py-24">
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="text-center mb-14">
-
-          <h1 className="text-5xl font-bold">
-            Top Universities
-          </h1>
+          <h2 className="text-5xl font-bold">
+            Student Success Stories
+          </h2>
 
           <p className="text-gray-400 mt-4">
-            Explore UGC approved universities
-            and find the right program for
-            your career goals.
+            Hear from students who found
+            their dream university.
           </p>
-
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {universities.map((university) => (
-
-            <div
-              key={university.id}
+          {testimonials.map((item) => (
+            <motion.div
+              key={item.id}
+              whileHover={{
+                y: -8,
+              }}
               className="
               glass
+              p-8
               rounded-3xl
-              overflow-hidden
               "
             >
+              <div className="flex items-center gap-4">
 
-              <img
-                src={
-                  university.banner ||
-                  university.image
-                }
-                alt={university.name}
-                className="
-                w-full
-                h-56
-                object-cover
-                "
-              />
-
-              <div className="p-6">
-
-                <h3 className="text-2xl font-bold">
-                  {university.name}
-                </h3>
-
-                <p className="text-gray-400 mt-2">
-                  📍 {university.location}
-                </p>
-
-                <div className="flex gap-4 mt-4">
-
-                  <span>
-                    ⭐ {university.rating}
-                  </span>
-
-                  <span>
-                    ₹ {Number(
-                      university.fees
-                    ).toLocaleString()}
-                  </span>
-
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-
-                  {university.approvals
-                    ?.slice(0, 3)
-                    .map((item) => (
-
-                      <span
-                        key={item}
-                        className="
-                        text-xs
-                        px-3
-                        py-1
-                        rounded-full
-                        bg-cyan-500/20
-                        "
-                      >
-                        {item}
-                      </span>
-
-                    ))}
-
-                </div>
-
-                <Link
-                  to={`/universities/${university.slug}`}
+                <img
+                  src={item.image}
+                  alt={item.name}
                   className="
-                  mt-6
-                  inline-block
-                  bg-cyan-500
-                  px-5
-                  py-3
-                  rounded-xl
+                  w-16
+                  h-16
+                  rounded-full
+                  object-cover
                   "
-                >
-                  View Details
-                </Link>
+                />
+
+                <div>
+                  <h3 className="font-bold text-lg">
+                    {item.name}
+                  </h3>
+
+                  <p className="text-cyan-400 text-sm">
+                    {item.course}
+                  </p>
+                </div>
 
               </div>
 
-            </div>
+              <p className="mt-6 text-gray-300 leading-7">
+                "{item.review}"
+              </p>
 
+              <div className="mt-6 text-yellow-400">
+                ⭐⭐⭐⭐⭐
+              </div>
+            </motion.div>
           ))}
 
         </div>
-
       </div>
-
     </section>
   );
 }

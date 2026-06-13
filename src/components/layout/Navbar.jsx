@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import { useTheme } from "../../context/ThemeContext";
+import { useCompare } from "../../context/CompareContext";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] =
@@ -17,6 +18,9 @@ export default function Navbar() {
     theme,
     toggleTheme,
   } = useTheme();
+
+  const { compareItems } =
+    useCompare();
 
   const navClass = ({ isActive }) =>
     isActive
@@ -96,13 +100,6 @@ export default function Navbar() {
             Courses
           </NavLink>
 
-          {/* <NavLink
-            to="/admission"
-            className={navClass}
-          >
-            Admission
-          </NavLink> */}
-
           <NavLink
             to="/about"
             className={navClass}
@@ -116,9 +113,35 @@ export default function Navbar() {
           >
             Contact
           </NavLink>
-        </div>
 
-        {/* Right Section */}
+          {/* <NavLink
+            to="/compare"
+            className={navClass}
+          >
+            Compare
+
+            {compareItems.length >
+              0 && (
+              <span
+                className="
+                ml-2
+                bg-cyan-500
+                text-white
+                px-2
+                py-1
+                rounded-full
+                text-xs
+                "
+              >
+                {
+                  compareItems.length
+                }
+              </span>
+            )}
+          </NavLink> */}
+
+          </div> 
+                  {/* Right Section */}
 
         <div
           className="
@@ -128,6 +151,42 @@ export default function Navbar() {
           ml-auto
           "
         >
+          <Link
+            to="/compare"
+            className="
+            hidden
+            xl:flex
+            items-center
+            gap-2
+            bg-white/10
+            px-4
+            py-2
+            rounded-xl
+            hover:bg-white/20
+            transition
+            "
+          >
+            Compare
+
+            {compareItems.length >
+              0 && (
+              <span
+                className="
+                bg-cyan-500
+                text-white
+                px-2
+                py-1
+                rounded-full
+                text-xs
+                "
+              >
+                {
+                  compareItems.length
+                }
+              </span>
+            )}
+          </Link>
+
           <button
             onClick={toggleTheme}
             className="
@@ -154,6 +213,7 @@ export default function Navbar() {
             py-2
             rounded-xl
             hover:bg-cyan-600
+            transition
             "
           >
             Apply
@@ -177,8 +237,7 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
+            {/* Mobile Menu */}
 
       {mobileOpen && (
         <div
@@ -218,15 +277,6 @@ export default function Navbar() {
               Courses
             </NavLink>
 
-            {/* <NavLink
-              to="/admission"
-              onClick={() =>
-                setMobileOpen(false)
-              }
-            >
-              Admission
-            </NavLink> */}
-
             <NavLink
               to="/about"
               onClick={() =>
@@ -245,6 +295,38 @@ export default function Navbar() {
               Contact
             </NavLink>
 
+            <NavLink
+              to="/compare"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+              className="
+              flex
+              items-center
+              justify-between
+              "
+            >
+              <span>Compare</span>
+
+              {compareItems.length >
+                0 && (
+                <span
+                  className="
+                  bg-cyan-500
+                  text-white
+                  px-2
+                  py-1
+                  rounded-full
+                  text-xs
+                  "
+                >
+                  {
+                    compareItems.length
+                  }
+                </span>
+              )}
+            </NavLink>
+
             <Link
               to="/contact"
               onClick={() =>
@@ -255,6 +337,8 @@ export default function Navbar() {
               py-2
               rounded-xl
               text-center
+              hover:bg-cyan-600
+              transition
               "
             >
               Apply

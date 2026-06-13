@@ -22,6 +22,18 @@ import Reviews from "../pages/Reviews";
 import CompareUniversities from "../pages/CompareUniversities";
 // import Admission from "../pages/Admission";
 
+// admin
+import AdminLayout from "../admin/AdminLayout";
+import Dashboard from "../admin/Dashboard";
+import Leads from "../admin/Leads";
+import Counsellors from "../admin/Counsellors";
+import UniversitiesAdmin from "../admin/Universities";
+import CoursesAdmin from "../admin/Courses";
+import BlogsAdmin from "../admin/Blogs";
+import SettingsAdmin from "../admin/Settings";
+
+import AdminLogin from "../admin/AdminLogin";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -77,6 +89,54 @@ export default function AppRoutes() {
             element={<CompareUniversities />}
 />
         </Route>
+
+
+        {/* admin */}
+
+        <Route
+  path="/admin/login"
+  element={<AdminLogin />}
+/>
+
+<Route
+  path="/admin"
+  element={<AdminLayout />}
+>
+  <Route
+    index
+    element={<Dashboard />}
+  />
+
+  <Route
+    path="leads"
+    element={<Leads />}
+  />
+
+  <Route
+    path="counsellors"
+    element={<Counsellors />}
+  />
+
+  <Route
+    path="universities"
+    element={<UniversitiesAdmin />}
+  />
+
+  <Route
+    path="courses"
+    element={<CoursesAdmin />}
+  />
+
+  <Route
+    path="blogs"
+    element={<BlogsAdmin />}
+  />
+
+  <Route
+    path="settings"
+    element={<SettingsAdmin />}
+  />
+</Route>
       </Routes>
     </BrowserRouter>
   );

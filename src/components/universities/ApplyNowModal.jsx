@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import Modal from "../common/Modal";
+import { submitLead } from "../../services/leadService";
 
 export default function ApplyNowModal({
   isOpen,
@@ -16,6 +17,9 @@ export default function ApplyNowModal({
       course: "",
     });
 
+    const [loading, setLoading] =
+  useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -24,40 +28,84 @@ export default function ApplyNowModal({
     });
   };
 
-  const handleSubmit = () => {
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.course
-    ) {
-      toast.error(
-        "Please fill all fields"
-      );
-      return;
-    }
+  const handleSubmit = async () => {
+  if (
+    !formData.name ||
+    !formData.email ||
+    !formData.phone ||
+    !formData.course
+  ) {
+    toast.error(
+      "Please fill all fields"
+    );
+    return;
+  }
 
-    console.log({
+  if (
+  !/\S+@\S+\.\S+/.test(
+    formData.email
+  )
+) {
+  toast.error(
+    "Enter valid email"
+  );
+  return;
+}
+
+  if (
+    !/^\d{10}$/.test(
+      formData.phone
+    )
+  ) {
+    toast.error(
+      "Enter valid 10 digit phone number"
+    );
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const leadData = {
       ...formData,
       university:
         university?.name || "",
       appliedAt:
-        new Date().toLocaleDateString(),
-    });
+        new Date().toISOString(),
+    };
 
-    toast.success(
-      "Application Submitted Successfully"
+    const response =
+      await submitLead(
+        leadData
+      );
+
+    if (
+  response &&
+  response.success
+) { 
+      toast.success(
+        "Application Submitted Successfully"
+      );
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        course: "",
+      });
+
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    }
+  } catch (error) {
+    toast.error(
+      "Something went wrong"
     );
-
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      course: "",
-    });
-
-    onClose();
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <Modal
@@ -99,18 +147,29 @@ export default function ApplyNowModal({
         />
 
         <input
-          type="text"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          className="
-          w-full
-          p-4
-          rounded-xl
-          bg-black/20
-          "
-        />
+  type="tel"
+  name="phone"
+  maxLength={10}
+  placeholder="Phone Number"
+  value={formData.phone}
+  onChange={(e) => {
+  const value = e.target.value.replace(
+    /\D/g,
+    ""
+  );
+
+  setFormData({
+    ...formData,
+    phone: value,
+  });
+}}
+  className="
+  w-full
+  p-4
+  rounded-xl
+  bg-black/20
+  "
+/>
 
         <input
           type="text"
@@ -142,18 +201,22 @@ export default function ApplyNowModal({
         />
 
         <button
-          onClick={handleSubmit}
-          className="
-          w-full
-          bg-cyan-500
-          py-4
-          rounded-xl
-          hover:bg-cyan-600
-          transition
-          "
-        >
-          Submit Application
-        </button>
+  onClick={handleSubmit}
+  disabled={loading}
+  className="
+  w-full
+  bg-cyan-500
+  py-4
+  rounded-xl
+  hover:bg-cyan-600
+  transition
+  disabled:opacity-60
+  "
+>
+  {loading
+    ? "Submitting..."
+    : "Submit Application"}
+</button>
 
       </div>
     </Modal>

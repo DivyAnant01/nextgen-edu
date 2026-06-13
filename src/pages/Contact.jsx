@@ -1,3 +1,6 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 import {
   Phone,
   Mail,
@@ -5,7 +8,85 @@ import {
   Clock,
 } from "lucide-react";
 
+import { submitLead } from "../services/leadService";
+
 export default function Contact() {
+  const [loading, setLoading] =
+  useState(false);
+
+const [formData, setFormData] =
+  useState({
+    name: "",
+    email: "",
+    phone: "",
+    course: "",
+    message: "",
+  });
+
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]:
+      e.target.value,
+  });
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (
+    !formData.name ||
+    !formData.email ||
+    !formData.phone
+  ) {
+    toast.error(
+      "Please fill required fields"
+    );
+    return;
+  }
+
+  if (
+    !/^\d{10}$/.test(
+      formData.phone
+    )
+  ) {
+    toast.error(
+      "Enter valid phone number"
+    );
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const response =
+      await submitLead({
+        ...formData,
+        source:
+          "Contact Page",
+      });
+
+    if (response.success) {
+      toast.success(
+        "Enquiry Submitted Successfully"
+      );
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        course: "",
+        message: "",
+      });
+    }
+  } catch (error) {
+    toast.error(
+      "Something went wrong"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <section className="pt-32 pb-20">
 
@@ -120,75 +201,98 @@ export default function Contact() {
               Request A Callback
             </h2>
 
-            <form className="space-y-5">
+            <form
+  onSubmit={handleSubmit}
+  className="space-y-5"
+>
 
               <input
-                type="text"
-                placeholder="Full Name"
-                className="
-                w-full
-                p-4
-                rounded-xl
-                bg-black/20
-                "
-              />
+  type="text"
+  name="name"
+  value={formData.name}
+  onChange={handleChange}
+  placeholder="Full Name"
+  className="
+  w-full
+  p-4
+  rounded-xl
+  bg-black/20
+  "
+/>
 
               <input
-                type="email"
-                placeholder="Email Address"
-                className="
-                w-full
-                p-4
-                rounded-xl
-                bg-black/20
-                "
-              />
+  type="email"
+  name="email"
+  value={formData.email}
+  onChange={handleChange}
+  placeholder="Email Address"
+  className="
+  w-full
+  p-4
+  rounded-xl
+  bg-black/20
+  "
+/>
 
               <input
-                type="tel"
-                placeholder="Phone Number"
-                className="
-                w-full
-                p-4
-                rounded-xl
-                bg-black/20
-                "
-              />
+  type="tel"
+  name="phone"
+  maxLength={10}
+  value={formData.phone}
+  onChange={handleChange}
+  placeholder="Phone Number"
+  className="
+  w-full
+  p-4
+  rounded-xl
+  bg-black/20
+  "
+/>
 
-              <input
-                type="text"
-                placeholder="Interested Course"
-                className="
-                w-full
-                p-4
-                rounded-xl
-                bg-black/20
-                "
-              />
+             <input
+  type="text"
+  name="course"
+  value={formData.course}
+  onChange={handleChange}
+  placeholder="Interested Course"
+  className="
+  w-full
+  p-4
+  rounded-xl
+  bg-black/20
+  "
+/>
 
               <textarea
-                rows="5"
-                placeholder="Message"
-                className="
-                w-full
-                p-4
-                rounded-xl
-                bg-black/20
-                "
-              />
+  rows="5"
+  name="message"
+  value={formData.message}
+  onChange={handleChange}
+  placeholder="Message"
+  className="
+  w-full
+  p-4
+  rounded-xl
+  bg-black/20
+  "
+/>
 
               <button
-                type="submit"
-                className="
-                w-full
-                bg-cyan-500
-                py-4
-                rounded-xl
-                font-semibold
-                "
-              >
-                Submit Enquiry
-              </button>
+  type="submit"
+  disabled={loading}
+  className="
+  w-full
+  bg-cyan-500
+  py-4
+  rounded-xl
+  font-semibold
+  disabled:opacity-60
+  "
+>
+  {loading
+    ? "Submitting..."
+    : "Submit Enquiry"}
+</button>
 
             </form>
 
