@@ -204,7 +204,11 @@ return ( <div className="min-h-screen flex">
 
     {/* Page */}
 
-    <main className="p-8">
+    <main className="flex-1
+  p-8
+  overflow-y-auto
+  min-h-screen
+  ">
       <Outlet />
     </main>
 

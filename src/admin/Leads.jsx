@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const counsellors = [
   "Rahul",
@@ -7,195 +8,390 @@ const counsellors = [
 ];
 
 export default function Leads() {
-  const [leads, setLeads] =
-    useState([
-      {
-        id: 1,
-        name: "Divy",
-        phone: "9876543210",
-        course: "MBA",
-        status: "New",
-        assignedTo: "",
-      },
-      {
-        id: 2,
-        name: "Anant",
-        phone: "9999999999",
-        course: "BCA",
-        status: "Contacted",
-        assignedTo: "Rahul",
-      },
-      
-      {
-        id: 3,
-        name: "radhike",
-        phone: "9876543210",
-        course: "MBA",
-        status: "New",
-        assignedTo: "",
-      },
-      {
-        id: 4,
-        name: "kamal",
-        phone: "9999999999",
-        course: "BCA",
-        status: "Contacted",
-        assignedTo: "Rahul",
-      },
-      {
-        id: 5,
-        name: "jaker",
-        phone: "9876543210",
-        course: "MBA",
-        status: "New",
-        assignedTo: "",
-      },
-      {
-        id: 5,
-        name: "sonu singh",
-        phone: "9999999999",
-        course: "BCA",
-        status: "Contacted",
-        assignedTo: "Rahul",
-      },
-    ]);
 
-  const assignLead = (
+  const [search, setSearch] =
+  useState("");
+
+const [statusFilter, setStatusFilter] =
+  useState("All");
+
+const [counsellorFilter, setCounsellorFilter] =
+  useState("All");
+
+  const [leads, setLeads] = useState([]);
+
+  useEffect(() => {
+    try {
+      const savedLeads = localStorage.getItem("leads");
+
+      setLeads(
+        savedLeads
+          ? JSON.parse(savedLeads)
+          : []
+      );
+    } catch (error) {
+      console.error(
+        "Error loading leads:",
+        error
+      );
+      setLeads([]);
+    }
+  }, []);
+
+  const filteredLeads =
+  leads.filter((lead) => {
+
+    const matchesSearch =
+      lead.name
+        ?.toLowerCase()
+        .includes(
+          search.toLowerCase()
+        ) ||
+      lead.phone?.includes(
+        search
+      ) ||
+      lead.email
+        ?.toLowerCase()
+        .includes(
+          search.toLowerCase()
+        );
+
+    const matchesStatus =
+      statusFilter === "All"
+        ? true
+        : lead.status ===
+          statusFilter;
+
+    const matchesCounsellor =
+      counsellorFilter === "All"
+        ? true
+        : lead.assignedTo ===
+          counsellorFilter;
+
+    return (
+      matchesSearch &&
+      matchesStatus &&
+      matchesCounsellor
+    );
+  });
+
+  const updateLead = (
     leadId,
-    counsellor
+    field,
+    value
   ) => {
-    setLeads(
-      leads.map((lead) =>
+    const updatedLeads = leads.map(
+      (lead) =>
         lead.id === leadId
           ? {
               ...lead,
-              assignedTo:
-                counsellor,
+              [field]: value,
             }
           : lead
-      )
     );
+
+    setLeads(updatedLeads);
+
+    try {
+      localStorage.setItem(
+        "leads",
+        JSON.stringify(updatedLeads)
+      );
+    } catch (error) {
+      console.error(
+        "Error saving leads:",
+        error
+      );
+    }
   };
 
   return (
-    <div className="p-8">
+    <div className="p-6 lg:p-8">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <h1 className="text-3xl font-bold">
+          Leads Management
+        </h1>
 
-      <h1 className="text-3xl font-bold mb-8">
-        Leads Management
-      </h1>
-
-      <div className="glass p-6 rounded-3xl overflow-x-auto">
-
-        <table className="w-full">
-
-          <thead>
-
-            <tr className="border-b border-white/10">
-
-              <th className="py-4 text-left">
-                Name
-              </th>
-
-              <th className="text-left">
-                Phone
-              </th>
-
-              <th className="text-left">
-                Course
-              </th>
-
-              <th className="text-left">
-                Status
-              </th>
-
-              <th className="text-left">
-                Assigned To
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {leads.map((lead) => (
-              <tr
-                key={lead.id}
-                className="
-                border-b
-                border-white/5
-                "
-              >
-                <td className="py-4">
-                  {lead.name}
-                </td>
-
-                <td>
-                  {lead.phone}
-                </td>
-
-                <td>
-                  {lead.course}
-                </td>
-
-                <td>
-                  {lead.status}
-                </td>
-
-                <td>
-
-                  <select
-                    value={
-                      lead.assignedTo
-                    }
-                    onChange={(e) =>
-                      assignLead(
-                        lead.id,
-                        e.target.value
-                      )
-                    }
-                    className="
-                    bg-black/20
-                    p-2
-                    rounded-lg
-                    "
-                  >
-                    <option value="">
-                      Select
-                    </option>
-
-                    {counsellors.map(
-                      (
-                        counsellor
-                      ) => (
-                        <option
-                          key={
-                            counsellor
-                          }
-                          value={
-                            counsellor
-                          }
-                        >
-                          {
-                            counsellor
-                          }
-                        </option>
-                      )
-                    )}
-
-                  </select>
-
-                </td>
-
-              </tr>
-            ))}
-
-          </tbody>
-
-        </table>
-
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          Total Leads: {filteredLeads.length}
+        </div>
       </div>
 
+      <div className="grid md:grid-cols-3 gap-4 mb-6">
+
+  <input
+    type="text"
+    placeholder="Search Lead..."
+    value={search}
+    onChange={(e) =>
+      setSearch(
+        e.target.value
+      )
+    }
+    className="
+    p-3
+    rounded-xl
+    border
+    border-gray-300
+    dark:border-slate-700
+    bg-white
+    dark:bg-slate-900
+    "
+  />
+
+  <select
+    value={statusFilter}
+    onChange={(e) =>
+      setStatusFilter(
+        e.target.value
+      )
+    }
+    className="
+    p-3
+    rounded-xl
+    border
+    border-gray-300
+    dark:border-slate-700
+    bg-white
+    dark:bg-slate-900
+    "
+  >
+
+    <option>
+      All
+    </option>
+
+    <option>
+      New
+    </option>
+
+    <option>
+      Contacted
+    </option>
+
+    <option>
+      Interested
+    </option>
+
+    <option>
+      Follow Up
+    </option>
+
+    <option>
+      Converted
+    </option>
+
+    <option>
+      Closed
+    </option>
+
+  </select>
+
+  <select
+    value={
+      counsellorFilter
+    }
+    onChange={(e) =>
+      setCounsellorFilter(
+        e.target.value
+      )
+    }
+    className="
+    p-3
+    rounded-xl
+    border
+    border-gray-300
+    dark:border-slate-700
+    bg-white
+    dark:bg-slate-900
+    "
+  >
+
+    <option>
+      All
+    </option>
+
+    {counsellors.map(
+      (person) => (
+        <option
+          key={person}
+        >
+          {person}
+        </option>
+      )
+    )}
+
+  </select>
+
+</div>
+
+      {/* Table Container */}
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-3xl shadow-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[900px]">
+            <thead>
+              <tr className="border-b border-gray-200 dark:border-slate-700">
+                <th className="text-left py-4 px-4">
+                  Name
+                </th>
+
+                <th className="text-left px-4">
+                  Phone
+                </th>
+
+                <th className="text-left px-4">
+                  Course
+                </th>
+
+                <th className="text-left px-4">
+                  Source
+                </th>
+
+                <th className="text-left px-4">
+                  Status
+                </th>
+
+                <th className="text-left px-4">
+                  Assigned To
+                </th>
+
+                <th className="text-left px-4">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {leads.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="py-10 text-center text-gray-500"
+                  >
+                    No Leads Found
+                  </td>
+                </tr>
+              ) : (
+                filteredLeads.map((lead, index) => (
+                  <tr
+                    key={
+                      lead.id ||
+                      lead._id ||
+                      index
+                    }
+                    className="border-b border-gray-100 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 transition"
+                  >
+                    <td className="py-4 px-4">
+                      {lead.name || "-"}
+                    </td>
+
+                    <td className="px-4">
+                      {lead.phone || "-"}
+                    </td>
+
+                    <td className="px-4">
+                      {lead.course || "-"}
+                    </td>
+
+                    <td className="px-4">
+                      {lead.source || "-"}
+                    </td>
+
+                    <td className="px-4">
+                      <select
+                        value={
+                          lead.status || "New"
+                        }
+                        onChange={(e) =>
+                          updateLead(
+                            lead.id,
+                            "status",
+                            e.target.value
+                          )
+                        }
+                        className="px-3 py-2 rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800"
+                      >
+                        <option value="New">
+                          New
+                        </option>
+
+                        <option value="Contacted">
+                          Contacted
+                        </option>
+
+                        <option value="Interested">
+                          Interested
+                        </option>
+
+                        <option value="Follow Up">
+                          Follow Up
+                        </option>
+
+                        <option value="Converted">
+                          Converted
+                        </option>
+
+                        <option value="Closed">
+                          Closed
+                        </option>
+                      </select>
+                    </td>
+
+                    <td className="px-4">
+                      <select
+                        value={
+                          lead.assignedTo ||
+                          ""
+                        }
+                        onChange={(e) =>
+                          updateLead(
+                            lead.id,
+                            "assignedTo",
+                            e.target.value
+                          )
+                        }
+                        className="px-3 py-2 rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800"
+                      >
+                        <option value="">
+                          Select
+                        </option>
+
+                        {counsellors.map(
+                          (counsellor) => (
+                            <option
+                              key={
+                                counsellor
+                              }
+                              value={
+                                counsellor
+                              }
+                            >
+                              {counsellor}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    </td>
+
+                    <td className="px-4">
+                      <Link
+                        to={`/admin/leads/${
+                          lead.id ||
+                          lead._id
+                        }`}
+                        className="inline-flex items-center px-4 py-2 rounded-lg bg-cyan-500 text-white hover:bg-cyan-600 transition"
+                      >
+                        View
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

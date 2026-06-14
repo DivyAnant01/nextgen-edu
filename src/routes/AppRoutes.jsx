@@ -20,9 +20,8 @@ import CourseDetails from "../pages/CourseDetails";
 import Scholarships from "../pages/Scholarships";
 import Reviews from "../pages/Reviews";
 import CompareUniversities from "../pages/CompareUniversities";
-// import Admission from "../pages/Admission";
 
-// admin
+/* Admin */
 import AdminLayout from "../admin/AdminLayout";
 import Dashboard from "../admin/Dashboard";
 import Leads from "../admin/Leads";
@@ -33,52 +32,72 @@ import BlogsAdmin from "../admin/Blogs";
 import SettingsAdmin from "../admin/Settings";
 
 import AdminLogin from "../admin/AdminLogin";
+import LeadDetails from "../admin/LeadDetails";
+import CounsellorProfile from "../admin/CounsellorProfile";
+
+/* Counsellor */
+import CounsellorLogin from "../counsellor/CounsellorLogin";
+import CounsellorLayout from "../counsellor/CounsellorLayout";
+import CounsellorDashboard from "../counsellor/CounsellorDashboard";
+import MyLeads from "../counsellor/MyLeads";
+import Profile from "../counsellor/Profile";
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
+
       <Routes>
-        <Route path="/" element={<MainLayout />}>
-          {/* Home */}
-          <Route index element={<Home />} />
 
-          {/* Static Pages */}
-          <Route path="about" element={<About />} />
-          <Route path="contact" element={<Contact />} />
+        {/* Website */}
 
-          {/* Universities */}
+        <Route
+          path="/"
+          element={<MainLayout />}
+        >
+          <Route
+            index
+            element={<Home />}
+          />
+
+          <Route
+            path="about"
+            element={<About />}
+          />
+
+          <Route
+            path="contact"
+            element={<Contact />}
+          />
+
           <Route
             path="universities"
             element={<Universities />}
           />
+
           <Route
             path="universities/:slug"
-            element={<UniversityDetails />}
+            element={
+              <UniversityDetails />
+            }
           />
 
-          {/* Courses */}
           <Route
             path="courses"
             element={<Courses />}
           />
+
           <Route
             path="courses/:slug"
-            element={<CourseDetails />}
+            element={
+              <CourseDetails />
+            }
           />
 
-          {/* Scholarships */}
           <Route
             path="scholarships"
             element={<Scholarships />}
           />
 
-          {/* Admission */}
-{/* <Route
-  path="admission"
-  element={<Admission />}
-/> */}
-
-          {/* Reviews */}
           <Route
             path="reviews"
             element={<Reviews />}
@@ -86,58 +105,119 @@ export default function AppRoutes() {
 
           <Route
             path="compare"
-            element={<CompareUniversities />}
-/>
+            element={
+              <CompareUniversities />
+            }
+          />
         </Route>
 
-
-        {/* admin */}
+        {/* Admin Login */}
 
         <Route
-  path="/admin/login"
-  element={<AdminLogin />}
-/>
+          path="/admin/login"
+          element={<AdminLogin />}
+        />
 
-<Route
-  path="/admin"
-  element={<AdminLayout />}
->
-  <Route
-    index
-    element={<Dashboard />}
-  />
+        {/* Admin Panel */}
 
-  <Route
-    path="leads"
-    element={<Leads />}
-  />
+        <Route
+          path="/admin"
+          element={<AdminLayout />}
+        >
+          <Route
+            index
+            element={<Dashboard />}
+          />
 
-  <Route
-    path="counsellors"
-    element={<Counsellors />}
-  />
+          <Route
+            path="leads"
+            element={<Leads />}
+          />
 
-  <Route
-    path="universities"
-    element={<UniversitiesAdmin />}
-  />
+          <Route
+            path="leads/:id"
+            element={<LeadDetails />}
+          />
 
-  <Route
-    path="courses"
-    element={<CoursesAdmin />}
-  />
+          <Route
+            path="counsellors"
+            element={<Counsellors />}
+          />
 
-  <Route
-    path="blogs"
-    element={<BlogsAdmin />}
-  />
+          <Route
+            path="counsellor/:id"
+            element={
+              <CounsellorProfile />
+            }
+          />
 
-  <Route
-    path="settings"
-    element={<SettingsAdmin />}
-  />
-</Route>
+          <Route
+            path="universities"
+            element={
+              <UniversitiesAdmin />
+            }
+          />
+
+          <Route
+            path="courses"
+            element={<CoursesAdmin />}
+          />
+
+          <Route
+            path="blogs"
+            element={<BlogsAdmin />}
+          />
+
+          <Route
+            path="settings"
+            element={<SettingsAdmin />}
+          />
+        </Route>
+
+        {/* Counsellor Login */}
+
+        <Route
+          path="/counsellor/login"
+          element={
+            <CounsellorLogin />
+          }
+        />
+
+        {/* Counsellor Panel */}
+
+        <Route
+          path="/counsellor"
+          element={
+            <CounsellorLayout />
+          }
+        >
+          <Route
+            index
+            element={
+              <CounsellorDashboard />
+            }
+          />
+
+          <Route
+            path="leads"
+            element={<MyLeads />}
+          />
+
+          <Route
+            path="profile"
+            element={<Profile />}
+          />
+
+          <Route
+            path="leads/:id"
+            element={<LeadDetails />}
+          />
+        </Route>
+
       </Routes>
+
     </BrowserRouter>
   );
 }
+
+
